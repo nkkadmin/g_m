@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<!-- 数据库驱动程序 -->
+	<classPathEntry location="C:\\Users\\xsx\\.m2\\repository\\mysql\\mysql-connector-java\\5.1.34\\mysql-connector-java-5.1.34.jar" />
+	
+	<context id="context1">
+		
+        
+		<!-- 数据库连接 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://139.196.72.42:3306/empu" userId="root"
+			password="emp@1234" />
+			
+		<!-- java类型转换器 -->
+		<javaTypeResolver type="org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl">
+			<property name="forceBigDecimals" value="false"/>
+		</javaTypeResolver>
+		
+		<!-- 生成model文件 -->
+		<javaModelGenerator targetPackage="com.xsx.domain"
+			targetProject="C:\\workspase\\study2\\wx_js_sdk\\src\\main\\java" />
+		<!-- 生成mapper文件 -->
+		<sqlMapGenerator targetPackage="com.xsx.mapper"
+			targetProject="C:\\workspase\\study2\\wx_js_sdk\\src\\main\\java" />
+		<!-- 生成mpper.xml文件 -->
+		<javaClientGenerator targetPackage="com.xsx.mapper"
+			targetProject="C:\\workspase\\study2\\wx_js_sdk\\src\\main\\java" type="XMLMAPPER" />
+		
+		<!-- 不生成Example相关的代码 -->
+		<table tableName="wxinfo" domainObjectName="WxInfo"
+			enableCountByExample="false" enableDeleteByExample="false"
+			enableUpdateByExample="false" enableSelectByExample="false" />
+	</context>
+</generatorConfiguration>
