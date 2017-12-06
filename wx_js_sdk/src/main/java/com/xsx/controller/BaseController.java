@@ -12,6 +12,7 @@ import com.xsx.domain.Employee;
 import com.xsx.domain.Role;
 import com.xsx.service.DepartmentService;
 import com.xsx.service.EmployeeService;
+import com.xsx.service.IpsService;
 import com.xsx.service.OrdersService;
 import com.xsx.service.RoleService;
 import com.xsx.util.Md5Utils;
@@ -26,6 +27,9 @@ public class BaseController {
 	public OrdersService ordersService;
 	@Resource
 	public DepartmentService departmentService;
+	@Resource
+	public IpsService ipsService;
+	
 
 	public HttpServletRequest getRequest() {
 		HttpServletRequest request = ((ServletRequestAttributes) (RequestContextHolder
@@ -50,8 +54,9 @@ public class BaseController {
 	}
 
 	public Employee getCurrentEmpSession() {
-		if (getSessionValue(Constants.CURRENTP_SESSION_EMP) != null) {
-			return (Employee) getSessionValue(Constants.CURRENTP_SESSION_EMP);
+		Object obj = getSessionValue(Constants.CURRENTP_SESSION_EMP);
+		if (obj != null) {
+			return (Employee) obj;
 		}
 		return null;
 	}
@@ -73,20 +78,21 @@ public class BaseController {
 	 * @return
 	 */
 	public String loginImp(Employee employee, String roleDescript,
-			String sessionName) {
+			String sessionName) throws Exception {
 		if (employee == null || employee.getName() == null
 				|| employee.getPassword() == null) {
 			return "用户名和密码不能为空";
 		}
 		Employee dirEmployee = employeeService.selectByName(employee.getName());
 		if (dirEmployee != null) {
-			String inputPass = Md5Utils.EncoderByMd5(employee.getName()
+			String inputPass = Md5Utils.encoderByMd5(employee.getName()
 					+ employee.getPassword());
 			if (inputPass.equals(dirEmployee.getPassword())) {
 				// 判断是权限
 				Role role = roleService.selectByPrimaryKey(dirEmployee
 						.getRoleid());
-				if (role != null && role.getDescript().equals(roleDescript)) {
+				if (role != null && role.getDescript() != null
+						&& role.getDescript().equals(roleDescript)) {
 					setSession(sessionName, dirEmployee);
 					return "登录成功";
 				} else {
@@ -99,15 +105,19 @@ public class BaseController {
 
 	/**
 	 * 退出实现逻辑
+	 * 
 	 * @param empId
 	 * @return
 	 */
-	public String logOutImp(Integer empId,String sessionName) {
+	public String logOutImp(Integer empId, String sessionName) throws Exception {
 		if (empId != null) {
-			Employee employee = (Employee) getSessionValue(sessionName);
-			if (employee != null && empId == employee.getId()) {
-				removeSession(sessionName);
-				return "退出成功";
+			Object obj = getSessionValue(sessionName);
+			if (obj != null) {
+				Employee employee = (Employee) obj;
+				if (employee.getId().equals(empId)) {
+					removeSession(sessionName);
+					return "退出成功";
+				}
 			}
 		}
 		return "退出失败";

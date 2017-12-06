@@ -29,7 +29,7 @@ public interface EmployeeMapper {
 	 * 
 	 * @return
 	 */
-	List<Employee> selectAllEmp(@Param("name") String name,@Param("roleDescriptName") String roleDescriptName,Page<Employee> page);
+	List<Employee> selectAllEmp(@Param("name") String name,@Param("departmentId") Integer departmentId,@Param("roleDescriptName") String roleDescriptName,Page<Employee> page);
 	
 	/**
 	 * 根据部门id查询用户
@@ -39,10 +39,18 @@ public interface EmployeeMapper {
 	List<Employee> selectByDepartmentId(@Param("departmentId") Integer departmentId);
 	
 	/**
-	 * 统计员工订单量
+	 * 统计员工订单量:按个人统计
 	 * @return
 	 */
-	public List<EmployeeOrderCount> statisticsEmployeeOrder(@Param("empName") String empName,Page<EmployeeOrderCount> page);
+	public List<EmployeeOrderCount> statisticsEmployeeOrderByPeople(@Param("employeeOrderCount") EmployeeOrderCount employeeOrderCount,Page<EmployeeOrderCount> page);
+	
+	/**
+	 *  统计员工订单量:按部门统计
+	 * @param employeeOrderCount
+	 * @param page
+	 * @return
+	 */
+	public List<EmployeeOrderCount> statisticsEmployeeOrderByDepartment(@Param("employeeOrderCount") EmployeeOrderCount employeeOrderCount,Page<EmployeeOrderCount> page);
 	
 }
 

@@ -11,9 +11,12 @@ import com.xsx.constant.Constants;
 import com.xsx.domain.Employee;
 import com.xsx.domain.EmployeeOrderCount;
 import com.xsx.domain.Page;
+import com.xsx.domain.Role;
 import com.xsx.mapper.EmployeeMapper;
+import com.xsx.mapper.OrdersMapper;
 import com.xsx.mapper.RoleMapper;
 import com.xsx.service.EmployeeService;
+import com.xsx.service.IpsService;
 import com.xsx.util.DateHelper;
 import com.xsx.util.Md5Utils;
 
@@ -24,7 +27,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeMapper employeeMapper;
 	@Resource
 	private RoleMapper roleMapper;
-
+	@Resource
+	private IpsService ipsService;
+	@Resource
+	private OrdersMapper ordersMapper;
+	
 
 	@Override
 	public int deleteByPrimaryKey(Integer id) {
@@ -69,10 +76,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 			return null;
 		}
 		if (employee.getRoleid() == null) {
-			employee.setRoleid(roleMapper.selectByDescript(roleDescriptName).getId());
+			Role role = roleMapper.selectByDescript(roleDescriptName);
+			employee.setRoleid(role.getId());
 		}
 		if (employee.getPassword() != null) {
-			employee.setPassword(Md5Utils.EncoderByMd5(employee.getName()
+			employee.setPassword(Md5Utils.encoderByMd5(employee.getName()
 					+ employee.getPassword()));
 		}
 		employee.setCreatedate(DateHelper.nowDate());
@@ -114,8 +122,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 			roleDescriptName = Constants.ROLE_EMPLOYEE;
 		}
 		List<Employee> list = employeeMapper.selectAllEmp(
-				employee != null ? employee.getName() : null,roleDescriptName, page);
+				employee != null ? employee.getName() : null,
+				employee != null ? employee.getDepartmentid() : null,
+				roleDescriptName, page);
 		for(Employee e :list){
+			//生成分享链接
 			e.setExtensionurl(hostName + "/shop/info?empId="+e.getId()+"&code="+e.getExtensionrandomcode());
 		}
 		page.setRows(list);
@@ -143,7 +154,28 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public Page<EmployeeOrderCount> statisticsEmployeeOrder(EmployeeOrderCount employeeOrderCount, Page<EmployeeOrderCount> page) {
-		employeeMapper.statisticsEmployeeOrder(employeeOrderCount != null ? employeeOrderCount.getEmpName() : null,page);
+		if(employeeOrderCount != null && employeeOrderCount.getType() != null
+				&& employeeOrderCount.getType().equals("people")){
+			List<EmployeeOrderCount> list = employeeMapper.statisticsEmployeeOrderByPeople(employeeOrderCount,page);
+			for(EmployeeOrderCount emp : list){
+				emp.setTodayCount(ordersMapper.todayOrderCount(emp.getEmpId()));
+			}
+		}
+		if(employeeOrderCount != null && employeeOrderCount.getType() != null
+				&& employeeOrderCount.getType().equals("department")){
+			List<EmployeeOrderCount> list = employeeMapper.statisticsEmployeeOrderByDepartment(employeeOrderCount,page);
+			for(EmployeeOrderCount emp : list){
+				emp.setEmpName("-");
+				//获取该部门全部员工
+				List<Employee> emps = employeeMapper.selectByDepartmentId(emp.getDepartmentId());
+				String empIds = "";
+				for(Employee employee : emps){
+					empIds += employee.getId()+",";
+				}
+				empIds = empIds.equals("") ? "0" : empIds.substring(0, empIds.length()-1);
+				emp.setTodayCount(ordersMapper.todayOrderCountByEmpIds(empIds));
+			}
+		}
 		return page;
 	}
 }

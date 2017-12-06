@@ -13,8 +13,14 @@ public class EmployeeOrderCount {
 
 	// 员工id
 	private Integer empId;
+	//部门id
+	private Integer departmentId;
 
 	private String empName;
+	//部门名称
+	private String departmentName;
+	//统计类型：按部门统计（department），按个人统计（people）
+	private String type;
 
 	// 今天订单
 	private Integer todayCount;
@@ -85,4 +91,29 @@ public class EmployeeOrderCount {
 	public void setEmpName(String empName) {
 		this.empName = empName;
 	}
+
+	public String getDepartmentName() {
+		return departmentName;
+	}
+
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Integer getDepartmentId() {
+		return departmentId;
+	}
+
+	public void setDepartmentId(Integer departmentId) {
+		this.departmentId = departmentId;
+	}
+	
 }

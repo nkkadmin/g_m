@@ -11,9 +11,8 @@
 	<link rel="stylesheet" href="${ctx }/manager/Css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="${ctx }/manager/Css/htmleaf-demo.css">
 	<style type="text/css">
-		 
 		.form-horizontal{
-		    background: #fff;
+		    background: #ddd;
 		    padding-bottom: 40px;
 		    border-radius: 15px;
 		    text-align: center;
@@ -25,6 +24,7 @@
 		    padding: 35px 0;
 		    border-bottom: 1px solid #f0f0f0;
 		    margin-bottom: 30px;
+		    color:#204077;
 		}
 		.form-horizontal .form-group{
 		    padding: 0 40px;
@@ -72,11 +72,11 @@
 		    float: left;
 		    width: 20px;
 		    height: 20px;
-		    background: #204077;
+		    background: #224075;
 		    border-radius: 50%;
 		    position: relative;
 		    margin: 5px 0 0 5px;
-		    border: 1px solid #204077;
+		    border: 1px solid #224075;
 		}
 		.form-horizontal .main-checkbox label{
 		    width: 20px;
@@ -113,6 +113,7 @@
 		    line-height: 20px;
 		    padding-top: 5px;
 		    text-transform: capitalize;
+		    color: #224075;
 		}
 		.form-horizontal .btn{
 		    float: right;

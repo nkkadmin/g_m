@@ -40,19 +40,19 @@
 	<input type="hidden" name="roleDescriptName" value="EMPLOYEE"/>
     <table class="table table-bordered table-hover definewidth m10">
         <tr>
-            <td width="10%" class="tableleft">员工姓名</td>
+            <td width="10%" class="tableleft"><span style="color: red;">*</span>员工姓名</td>
             <td><input type="text" name="name" id="name"/></td>
         </tr>
         <tr>
-        	<td width="10%" class="tableleft">电话</td>
+        	<td width="10%" class="tableleft"><span style="color: red;">*</span>电话</td>
         	<td><input type="text" name="phone" id="phone"/></td>
         </tr>
         <tr>
-        	<td width="10%" class="tableleft">密码</td>
+        	<td width="10%" class="tableleft"><span style="color: red;">*</span>密码</td>
         	<td><input type="text" name="password" id="password"/></td>
         </tr>
         <tr>
-            <td class="tableleft">所属部门</td>
+            <td class="tableleft"><span style="color: red;">*</span>所属部门</td>
             <td>
             	<select class="roleselect" name="departmentid" id="departmentid">
             		<c:forEach items="${departments }" var="department">

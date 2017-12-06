@@ -21,12 +21,15 @@ public class HttpSendUtils {
 	private HttpSendUtils() {
 	}
 
+
 	public static String sendGet(String url) throws MalformedURLException,
 			IOException {
-		System.out.println("....send...GET...." + url);
+System.out.println("....send...GET...." + url);
 		HttpURLConnection connection = (HttpURLConnection) new URL(url)
 				.openConnection();
 		connection.setRequestMethod("GET");
+		connection.setRequestProperty("Accept-Charset", "utf-8");
+		connection.setRequestProperty("contentType", "utf-8");
 		connection.setReadTimeout(5000);
 		if (connection.getResponseCode() == 200) {
 			String responseContent = readerContent(connection.getInputStream());

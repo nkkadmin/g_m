@@ -9,8 +9,7 @@
         
 		<!-- 数据库连接 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://139.196.72.42:3306/empu" userId="root"
-			password="emp@1234" />
+			connectionURL="jdbc:mysql://139.196.72.42:3306/empu" userId="root" password="emp@1234" />
 			
 		<!-- java类型转换器 -->
 		<javaTypeResolver type="org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl">
@@ -19,16 +18,16 @@
 		
 		<!-- 生成model文件 -->
 		<javaModelGenerator targetPackage="com.xsx.domain"
-			targetProject="C:\\workspase\\study2\\wx_js_sdk\\src\\main\\java" />
+			targetProject="C:\\workspase\\study2\\g_m\\wx_js_sdk\\src\\main\\java" />
 		<!-- 生成mapper文件 -->
 		<sqlMapGenerator targetPackage="com.xsx.mapper"
-			targetProject="C:\\workspase\\study2\\wx_js_sdk\\src\\main\\java" />
+			targetProject="C:\\workspase\\study2\\g_m\\wx_js_sdk\\src\\main\\java" />
 		<!-- 生成mpper.xml文件 -->
 		<javaClientGenerator targetPackage="com.xsx.mapper"
-			targetProject="C:\\workspase\\study2\\wx_js_sdk\\src\\main\\java" type="XMLMAPPER" />
+			targetProject="C:\\workspase\\study2\\g_m\\wx_js_sdk\\src\\main\\java" type="XMLMAPPER" />
 		
 		<!-- 不生成Example相关的代码 -->
-		<table tableName="wxinfo" domainObjectName="WxInfo"
+		<table tableName="ips" domainObjectName="Ips"
 			enableCountByExample="false" enableDeleteByExample="false"
 			enableUpdateByExample="false" enableSelectByExample="false" />
 	</context>

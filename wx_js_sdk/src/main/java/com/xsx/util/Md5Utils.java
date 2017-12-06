@@ -17,9 +17,6 @@ import sun.misc.BASE64Encoder;
  */
 public class Md5Utils {
 	
-	public static void main(String[] args) {
-		System.out.println(EncoderByMd5("company123456"));
-	}
 
 	/**
 	 * 利用MD5进行加密 　　
@@ -30,7 +27,10 @@ public class Md5Utils {
 	 * @throws
 	 * UnsupportedEncodingException 　　
 	 */
-	public static String EncoderByMd5(String str){
+	public static String encoderByMd5(String str){
+		if(str == null){
+			return "";
+		}
 		try {
 			// 确定计算方法
 			MessageDigest md5 = MessageDigest.getInstance("MD5");

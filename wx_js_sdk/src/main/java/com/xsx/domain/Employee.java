@@ -328,5 +328,16 @@ public class Employee {
 	public void setExtensionrandomcode(String extensionrandomcode) {
 		this.extensionrandomcode = extensionrandomcode;
 	}
+
+	@Override
+	public String toString() {
+		return "Employee [id=" + id + ", name=" + name + ", password="
+				+ password + ", phone=" + phone + ", createdate=" + createdate
+				+ ", extensionurl=" + extensionurl + ", extensioncore="
+				+ extensioncore + ", img=" + img + ", roleid=" + roleid
+				+ ", statu=" + statu + ", departmentid=" + departmentid
+				+ ", departmentName=" + departmentName
+				+ ", extensionrandomcode=" + extensionrandomcode + "]";
+	}
 	
 }

@@ -37,7 +37,7 @@ label.label_sel {
 
 				<div id="content_div">
 					<p align="center">
-						<img style="max-width: 100%;" src="${ctx}/images/运费新.jpg"> <b></b><i></i><u></u><sub></sub><sup></sup><strike></strike><br>
+						<img style="max-width: 100%;" src="${ctx}/images/yunf.jpg"> <b></b><i></i><u></u><sub></sub><sup></sup><strike></strike><br>
 					</p>
 					<p>
 						<br>
@@ -67,7 +67,7 @@ label.label_sel {
 							style="background-color: rgb(255, 0, 0);">贵重物品注意跟踪物流，以免快递丢失</font>
 					</p>
 					<p align="center">
-						<img style="max-width: 100%;" src="${ctx}/images/小苹果尾页.jpg"><b></b><i></i><u></u><sub></sub><sup></sup><strike></strike><br>
+						<img style="max-width: 100%;" src="${ctx}/images/appwy.jpg"><b></b><i></i><u></u><sub></sub><sup></sup><strike></strike><br>
 					</p>
 					<p>
 						<br>
@@ -90,7 +90,7 @@ label.label_sel {
 
 							</div>
 						</div>
-						<img src="${ctx}/images/款式b.jpg" />
+						<img src="${ctx}/images/kuanshi.jpg" />
 						<div class="form-group mt20">
 							<label class="field-title">收货人姓名 <span class="red">*</span></label>
 							<div class="field-content">
@@ -126,7 +126,6 @@ label.label_sel {
 								style="color: red;">*</span></label>
 							<div style="margin: 0px; padding: 0px;">
 								<select style="width: 300px; height: 30px;" name="phonepaytypeid" id="phonepaytypeid">&nbsp;
-									<option value="0">请选择充值卡类型</option>&nbsp;
 									<option value="1">移动充值卡100元</option>&nbsp;
 									<option value="2">联通充值卡100元</option>&nbsp;
 									<option value="3">电信充值卡100元</option>&nbsp;
@@ -147,7 +146,6 @@ label.label_sel {
 							<div class="value">
 								<input id="subbtn" type="button" class="btn btn-primary"
 									onclick="checkInput();" value="填写好了  确认提交">
-								<!--<a class="report-form" href="javascript:if(confirm(%27http://chinaau.aktvo.cn/Public/report/report1.html  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://chinaau.aktvo.cn/Public/report/report1.html%27" tppabs="http://chinaau.aktvo.cn/Public/report/report1.html">举报</a>-->
 							</div>
 						</div>
 					</div>
@@ -168,8 +166,6 @@ label.label_sel {
 	});
 
 	function checkInput() {
-		
-
 		 $('#subbtn').attr("disabled", true);
 
 		if ($("input[name=shopname]:checked").length < 1) {

@@ -33,9 +33,10 @@
 			MyBatis Generator, do not modify. This element was generated on Tue Oct 31 
 			11:27:22 CST 2017. -->
 		select
-		<include refid="Base_Column_List" />
-		from orders
-		where id = #{id,jdbcType=INTEGER}
+		o.id, o.receiptname, o.receiptphone, o.receiptaddress,
+		o.shopname, o.createDate,e.name as empName
+		from orders o LEFT JOIN employee e ON o.`empid`=e.`id` 
+		where o.id = #{id,jdbcType=INTEGER} and o.statu=1
 	</select>
 
 	<insert id="insert" parameterType="com.xsx.domain.Orders">
@@ -180,6 +181,10 @@
 		SELECT COUNT(*) AS todayCount FROM orders o WHERE statu = 1 AND o.`empid`=
 		#{empId,jdbcType=INTEGER} AND TO_DAYS(o.`createDate`) = TO_DAYS(NOW())
 	</select>
+	<select id="todayOrderCountByEmpIds" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS todayCount FROM orders o WHERE statu = 1 AND o.`empid` in
+		(#{empIds,jdbcType=VARCHAR}) AND TO_DAYS(o.`createDate`) = TO_DAYS(NOW())
+	</select>
 	<select id="yesterOrderCount" resultType="java.lang.Integer">
 		SELECT COUNT(*) AS yesterCount FROM orders o WHERE statu = 1 AND o.`empid`=
 		#{empId,jdbcType=INTEGER} AND TO_DAYS(NOW()) - TO_DAYS(o.`createDate`)
@@ -208,7 +213,15 @@
 		SELECT
 		o.`id`,o.shopname,o.`receiptname`,o.`receiptphone`,o.`receiptaddress`,o.`createDate`,e.`name`
 		AS empName
-		FROM orders o LEFT JOIN employee e ON o.`empid`=e.`id` WHERE o.`statu`= 1
+		FROM orders o LEFT JOIN employee e ON o.`empid`=e.`id`
+		<where> o.`statu`= 1
+			<if test="order.receiptname != null and order.receiptname != ''">
+				and o.receiptname = #{order.receiptname,jdbcType=VARCHAR}
+			</if>
+			<if test="order.empid != null and order.empid != ''">
+				and o.empid = #{order.empid,jdbcType=INTEGER}
+			</if>
+		</where>
 		ORDER BY o.createDate DESC
 	</select>
 

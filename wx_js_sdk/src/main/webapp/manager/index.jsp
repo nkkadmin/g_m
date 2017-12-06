@@ -22,7 +22,7 @@
 		</div>
 
 		<div class="dl-log">
-			欢迎您，<span class="dl-log-user">${currentSessionCompany.name}</span><a href="javaScript:logOut();" title="退出系统" class="dl-log-quit">[退出]</a>
+			鼎华电子商务    欢迎您，<span class="dl-log-user">${currentSessionCompany.name}</span><a href="javaScript:logOut();" title="退出系统" class="dl-log-quit">[退出]</a>
 		</div>
 	</div>
 	<div class="content">
@@ -58,26 +58,30 @@
 						closeable : false
 					},{
 						id : '7',
-						text : '公司角色管理',
-						href : '${ctx}/system/companyUI',
+						text : '部门管理',
+						href : '${ctx}/system/departmentUI',
 						closeable : false
 					},{
 						id : '7',
-						text : '部门管理',
-						href : '${ctx}/system/departmentUI',
+						text : '公司角色管理',
+						href : '${ctx}/system/companyUI',
 						closeable : false
 					},{
 						id : '4',
 						text : '员工信息管理',
 						href : '${ctx}/system/employeeUI'
-					}, {
+					},{
 						id : '3',
 						text : '客户订单管理',
 						href : '${ctx}/system/orderUI'
-					},  {
+					},{
 						id : '12',
 						text : '员工订单量统计',
 						href : '${ctx}/system/employeeordernumUI'
+					},{
+						id : '13',
+						text : '域名管理',
+						href : '${ctx}/system/ipsUI'
 					} ]
 				} ]
 			}];

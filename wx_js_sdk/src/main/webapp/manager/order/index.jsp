@@ -18,13 +18,7 @@
 	href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
 	href="${ctx}/manager/Css/style.css" />
-<script type="text/javascript" src="${ctx}/js/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="${ctx}/manager/Js/bootstrap.js"></script>
-<script type="text/javascript" src="${ctx}/manager/Js/ckform.js"></script>
-<script src='${ctx}/js/bootstrap/bootstrap-table/bootstrap-table.min.js'
-	type='text/javascript'></script>
-<script type="text/javascript" src="${ctx}/manager/Js/common.js"></script>
-<script src="${ctx }/js/jquery-weui.min.js"></script>
+
 
 <style type="text/css">
 body {
@@ -46,7 +40,12 @@ body {
 </style>
 </head>
 <body>
-	<div class="form-inline definewidth m20"></div>
+	
+	<div class="form-inline definewidth m20">
+		收货人姓名： <input type="text" name="name" id="searchKey"
+			class="abc input-default" placeholder="" value="">&nbsp;&nbsp;
+		<button class="btn btn-primary" onclick="search()">查询</button>
+	</div> 
 	<table class="table table-bordered table-hover definewidth m10"
 		id="evaluationList" data-pagination="true" data-query-params-type=""
 		data-side-pagination="server" data-page-list="[All]"
@@ -75,17 +74,32 @@ body {
 		</thead>
 	</table>
 </body>
+<script type="text/javascript" src="${ctx}/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="${ctx}/manager/Js/bootstrap.js"></script>
+<script type="text/javascript" src="${ctx}/manager/Js/ckform.js"></script>
+<script src='${ctx}/js/bootstrap/bootstrap-table/bootstrap-table.min.js'
+	type='text/javascript'></script>
+<script type="text/javascript" src="${ctx}/manager/Js/common.js"></script>
+<script src="${ctx }/js/jquery-weui.min.js"></script>
 <script>
 	$(function() {
 		$('#evaluationList').bootstrapTable({
 			method : 'post'
 		});
 	});
+	
+	function search() {
+		$('#evaluationList').bootstrapTable("refresh", {
+			url : '${ctx}/order/allOrder'
+		});
+	}
 
 	/* 查询参数 */
 	function searchParams(params) {
 		params.pageNo = params.pageNumber;// 当前页
 		params.pageSize = params.pageSize;// 每页记录数
+		params.receiptname = $("#searchKey").val();
+		params.empid = '${empId}';
 		return params;
 	}
 
@@ -96,6 +110,7 @@ body {
 						res.rows,
 						function(i, row) {
 							row.rowOption = "";
+							row.rowOption += "<a style='margin-right:10px;' href='${ctx}/system/editOrderUI?id="+row.id+"'>修改</a>";
 							row.rowOption += "<a style='margin-right:10px;' href='##' onclick='del("
 									+ row.id + ")'>刪除</a>";
 						});

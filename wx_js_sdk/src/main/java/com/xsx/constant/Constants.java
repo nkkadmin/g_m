@@ -19,7 +19,7 @@ public class Constants {
 	public final static int STATU_DELETE = 0;
 
 	// 角色
-	public final static String ROLE_COMMPANY = "COMMPANY";
+	public final static String ROLE_COMMPANY = "COMPANY";
 	public final static String ROLE_EMPLOYEE = "EMPLOYEE";
 	public final static String ROLE_CUSTOMER = "CUSTOMER";
 	
@@ -28,7 +28,12 @@ public class Constants {
 	public final static String IMG_DEFAULT_2 = "img/headpro/default_2.png";
 	public final static String IMG_DEFAULT_3 = "img/headpro/default_3.png";
 	public final static String[] IMG_DEFAULTS = {IMG_DEFAULT_1,IMG_DEFAULT_2,IMG_DEFAULT_3};
-
+	
+	//员工后台登录
 	public final static String CURRENTP_SESSION_EMP = "currentSessionEmp";
+	//公司角色后台登录
 	public final static String CURRENTP_SESSION_COMPANY = "currentSessionCompany";
+	
+	public final static String WXTOKENANDTICKETSESSION = "wxTokenAndTicketSession";
+	
 }

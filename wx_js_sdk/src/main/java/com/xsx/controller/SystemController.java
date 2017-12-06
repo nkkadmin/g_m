@@ -15,8 +15,12 @@ import com.xsx.domain.AjaxJson;
 import com.xsx.domain.Department;
 import com.xsx.domain.Employee;
 import com.xsx.domain.EmployeeOrderCount;
+import com.xsx.domain.Ips;
+import com.xsx.domain.Orders;
 import com.xsx.domain.Page;
+import com.xsx.util.DateHelper;
 import com.xsx.util.Md5Utils;
+import com.xsx.util.StringHelper;
 
 /**
  * 
@@ -31,11 +35,17 @@ import com.xsx.util.Md5Utils;
 @RequestMapping("/system")
 public class SystemController extends BaseController {
 
+	/**
+	 * 生成员工后台二维码页面
+	 * 
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/employeeadmincoreUI", method = RequestMethod.GET)
 	public ModelAndView employeeadmincoreUI(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("/manager/employeeadmincore");
 		String url = request.getScheme() + "://" + request.getServerName()
-				+ request.getContextPath();
+				+ request.getContextPath() + "/employee/loginUI";
 		mv.addObject("url", url);
 		return mv;
 	}
@@ -72,6 +82,8 @@ public class SystemController extends BaseController {
 			json.setMessage(message);
 		} catch (Exception e) {
 			e.printStackTrace();
+			json.setMessage("登陆失败，请联系开发人员！");
+			json.setSuccess(false);
 		}
 		return json;
 	}
@@ -86,13 +98,20 @@ public class SystemController extends BaseController {
 	@RequestMapping(value = "/logOut", method = RequestMethod.GET)
 	public AjaxJson logOut(Integer empId) {
 		AjaxJson json = new AjaxJson();
-		String message = logOutImp(empId, Constants.CURRENTP_SESSION_COMPANY);
-		if (message != null && message.equals("退出成功")) {
-			json.setSuccess(true);
-		} else {
+		try {
+			String message = logOutImp(empId,
+					Constants.CURRENTP_SESSION_COMPANY);
+			if (message != null && message.equals("退出成功")) {
+				json.setSuccess(true);
+			} else {
+				json.setSuccess(false);
+			}
+			json.setMessage(message);
+		} catch (Exception e) {
+			e.printStackTrace();
+			json.setMessage("退出失败");
 			json.setSuccess(false);
 		}
-		json.setMessage(message);
 		return json;
 	}
 
@@ -115,12 +134,16 @@ public class SystemController extends BaseController {
 	@RequestMapping(value = "/employeeordernumUI", method = RequestMethod.GET)
 	public ModelAndView employeeordernumUI() {
 		ModelAndView mv = new ModelAndView("/manager/employeeordernum/index");
+		List<Department> list = departmentService.selectAllDepartment();
+		mv.addObject("departmentList", list);
 		return mv;
 	}
 
 	/**
 	 * 员工订单量统计
 	 * 
+	 * @param type
+	 *            统计类型：按部门统计（department），按个人统计（people）
 	 * @param employeeOrderCount
 	 * @param page
 	 * @return
@@ -131,8 +154,7 @@ public class SystemController extends BaseController {
 			EmployeeOrderCount employeeOrderCount, Page<EmployeeOrderCount> page) {
 		try {
 			if (employeeOrderCount != null
-					&& employeeOrderCount.getEmpName() != null
-					&& !employeeOrderCount.getEmpName().equals("")) {
+					&& !StringHelper.isEmpty(employeeOrderCount.getEmpName())) {
 				employeeOrderCount.setEmpName("%"
 						+ new String(employeeOrderCount.getEmpName().getBytes(
 								"iso-8859-1"), "utf-8") + "%");
@@ -152,9 +174,53 @@ public class SystemController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/employeeUI", method = RequestMethod.GET)
-	public ModelAndView employeeUI() {
+	public ModelAndView employeeUI(Integer departmentId) {
 		ModelAndView mv = new ModelAndView("/manager/employee/index");
+		mv.addObject("departmentId", departmentId);
 		return mv;
+	}
+
+	/**
+	 * 修改
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/editOrderUI", method = RequestMethod.GET)
+	public ModelAndView editOrderUI(Integer id) {
+		ModelAndView mv = new ModelAndView("/manager/order/edit");
+		Orders order = ordersService.selectByPrimaryKey(id);
+		mv.addObject("order", order);
+		return mv;
+	}
+
+	/**
+	 * 修改订单
+	 * 
+	 * @param order
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/editOrder", method = RequestMethod.POST)
+	public AjaxJson editOrder(Orders order) {
+		AjaxJson json = new AjaxJson();
+		try {
+			if (order == null || order.getId() == null
+					|| StringHelper.isEmpty(order.getReceiptphone())
+					|| StringHelper.isEmpty(order.getReceiptaddress())) {
+				json.setMessage("参数不合格!");
+				json.setSuccess(false);
+				return json;
+			}
+			ordersService.updateByPrimaryKeySelective(order);
+			json.setMessage("修改成功");
+			json.setSuccess(true);
+		} catch (Exception e) {
+			json.setMessage("修改失败，请联系开发人员!");
+			json.setSuccess(false);
+			e.printStackTrace();
+		}
+		return json;
 	}
 
 	/**
@@ -174,8 +240,9 @@ public class SystemController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/orderUI", method = RequestMethod.GET)
-	public ModelAndView orderUI() {
+	public ModelAndView orderUI(Integer empId) {
 		ModelAndView mv = new ModelAndView("/manager/order/index");
+		mv.addObject("empId",empId);
 		return mv;
 	}
 
@@ -211,11 +278,9 @@ public class SystemController extends BaseController {
 	public Page<Employee> selectAllEmp(Employee employee, Page<Employee> page,
 			HttpServletRequest request) {
 		try {
-
 			String hostName = request.getScheme() + "://"
-					+ request.getServerName() + request.getContextPath();
-			if (employee != null && employee.getName() != null
-					&& !employee.getName().equals("")) {
+					+ request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+			if (employee != null && !StringHelper.isEmpty(employee.getName())) {
 				employee.setName("%"
 						+ new String(employee.getName().getBytes("iso-8859-1"),
 								"utf-8") + "%");
@@ -229,6 +294,7 @@ public class SystemController extends BaseController {
 		return null;
 	}
 
+	
 	/**
 	 * 获取全部公司角色账号
 	 * 
@@ -239,8 +305,7 @@ public class SystemController extends BaseController {
 	public Page<Employee> selectAllCommpany(Employee employee,
 			Page<Employee> page, HttpServletRequest request) {
 		try {
-			if (employee != null && employee.getName() != null
-					&& !employee.getName().equals("")) {
+			if (employee != null && !StringHelper.isEmpty(employee.getName())) {
 				employee.setName("%"
 						+ new String(employee.getName().getBytes("iso-8859-1"),
 								"utf-8") + "%");
@@ -283,8 +348,8 @@ public class SystemController extends BaseController {
 
 	/**
 	 * 添加员工
-	 * 
 	 * @param employee
+	 * @param roleDescriptName
 	 * @return
 	 */
 	@ResponseBody
@@ -292,9 +357,9 @@ public class SystemController extends BaseController {
 	public AjaxJson addEmp(Employee employee, String roleDescriptName) {
 		AjaxJson json = new AjaxJson();
 		try {
-			if (employee == null || employee.getName() == null
-					|| employee.getPassword() == null
-					|| employee.getPhone() == null) {
+			if (employee == null || StringHelper.isEmpty(employee.getName())
+					|| StringHelper.isEmpty(employee.getPassword())
+					|| StringHelper.isEmpty(employee.getPhone())) {
 				json.setMessage("参数不合格!");
 				json.setSuccess(false);
 				return json;
@@ -308,6 +373,8 @@ public class SystemController extends BaseController {
 			json.setMessage("保存成功");
 			json.setSuccess(true);
 		} catch (Exception e) {
+			json.setMessage("保存失败，请联系开发人员!");
+			json.setSuccess(false);
 			e.printStackTrace();
 		}
 		return json;
@@ -332,7 +399,7 @@ public class SystemController extends BaseController {
 				json.setSuccess(false);
 			}
 		} catch (Exception e) {
-			json.setMessage("删除失败");
+			json.setMessage("删除失败,请联系开发人员！");
 			json.setSuccess(false);
 			e.printStackTrace();
 		}
@@ -352,7 +419,7 @@ public class SystemController extends BaseController {
 		try {
 			Employee employee = employeeService.selectByPrimaryKey(empId);
 			if (employee != null) {
-				employee.setPassword(Md5Utils.EncoderByMd5(employee.getName()
+				employee.setPassword(Md5Utils.encoderByMd5(employee.getName()
 						+ resetPassowrd));
 				if (employeeService.updateByPrimaryKeySelective(employee) == 1) {
 					json.setMessage("重置成功");
@@ -363,10 +430,123 @@ public class SystemController extends BaseController {
 			json.setMessage("重置失败");
 			json.setSuccess(false);
 		} catch (Exception e) {
-			json.setMessage("重置失败");
+			json.setMessage("重置失败，请联系开发人员！");
 			json.setSuccess(false);
 			e.printStackTrace();
 		}
 		return json;
 	}
+	
+	//=====ips=====
+	/**
+	 * ip列表页
+	 * @return
+	 */
+	@RequestMapping(value="/ipsUI",method=RequestMethod.GET)
+	public ModelAndView ipsUI(){
+		ModelAndView mv = new ModelAndView("/manager/ips/index");
+		return mv;
+	}
+	
+	/**
+	 * 获取全部有效ip
+	 * 
+	 * @param ips
+	 * @param page
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/allIp", method = RequestMethod.POST)
+	public Page<Ips> allIp(Ips ips, Page<Ips> page) {
+		try {
+			page = ipsService.selectAllOrders(ips, page);
+			return page;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 添加或修改ip
+	 * @param ips
+	 * @return
+	 */
+	@RequestMapping(value = "/editIpUI", method = RequestMethod.GET)
+	public ModelAndView editIpUI(Integer id){
+		ModelAndView mv = new ModelAndView("/manager/ips/edit");
+		try {
+			mv.addObject("ips", id == null ? null : ipsService.selectByPrimaryKey(id));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mv;
+	}
+	
+	
+	/**
+	 * 编辑ip
+	 * @param ips
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/editIp", method = RequestMethod.POST)
+	public AjaxJson editIp(Ips ips){
+		AjaxJson json = new AjaxJson();
+		json.setSuccess(false);
+		json.setMessage("操作失败");
+		try {
+			if(ips != null){
+				if(ips.getId() != null && !ips.getId().equals("")){
+					//修改
+					Ips ip = ipsService.selectByPrimaryKey(ips.getId());
+					ip.setName(ips.getName());
+					ipsService.updateByPrimaryKeySelective(ip);
+					json.setSuccess(true);
+					json.setMessage("修改成功");
+				}else{
+					//添加
+					ips.setStatu(Constants.STATU_OK);
+					ips.setCreatedate(DateHelper.nowDate());
+					ipsService.insertSelective(ips);
+					json.setSuccess(true);
+					json.setMessage("添加成功");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			json.setSuccess(false);
+			json.setMessage("添加失败");
+		}
+		return json;
+	}
+	
+	/**
+	 * 刪除ip
+	 * @param id
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/deleteIp", method = RequestMethod.POST)
+	public AjaxJson deleteIp(Integer id){
+		AjaxJson json = new AjaxJson();
+		json.setSuccess(false);
+		json.setMessage("刪除失败");
+		try {
+			if(id != null){
+				Ips ips = ipsService.selectByPrimaryKey(id);
+				if(ips != null){
+					ipsService.deleteByPrimaryKey(id);
+					json.setSuccess(true);
+					json.setMessage("刪除成功");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			json.setSuccess(false);
+			json.setMessage("刪除失败");
+		}
+		return json;
+	}
+	
 }

@@ -78,4 +78,8 @@ public interface OrdersService {
 	 * @return
 	 */
 	Orders selectByEmpIdAndClientIP(String clientIP, Integer id);
+	
+	Orders selectByPrimaryKey(Integer id);
+	
+	int updateByPrimaryKeySelective(Orders record);
 }

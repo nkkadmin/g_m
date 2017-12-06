@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../../common/taglibs.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <title>员工信息管理</title>
 <meta charset="UTF-8">
-<%--  <link rel="stylesheet" type="text/css" href="${ctx}/manager/Css/bootstrap.css" />
- --%>
 <link href="${ctx }/css/weui.min.css" rel="stylesheet">
 <link rel="stylesheet" href="${ctx }/css/jquery-weui.min.css">
 <link rel="stylesheet" type="text/css"
@@ -46,11 +45,6 @@ body {
 </head>
 <body>
 	<div class="form-inline definewidth m20">
-		<!-- 		部门名称： <input type="text" name="name" id="searchKey"
-			class="abc input-default" placeholder="" value="">&nbsp;&nbsp;
-		<button class="btn btn-primary" onclick="search()">查询</button>
-		&nbsp;&nbsp;
- -->
 		<button type="button" class="btn btn-success" id="addnew">新增部门</button>
 	</div>
 	<table class="table table-bordered table-hover definewidth m10"
@@ -61,15 +55,16 @@ body {
 		data-response-handler="responseHandler">
 		<thead>
 			<tr>
-				<th class="ao_line-in" data-field="name" data-align="center"
+				<th class="ao_line-in" data-field="nameOption" data-align="center"
 					data-visible="true" data-cell-style="idStyle">部门名称</th>
 				<th class="ao_line-in" data-field="descript" data-align="center"
 					data-visible="true" data-cell-style="idStyle">说明</th>
-				<th class="ao_line-in" data-field="createdate" data-align="center"
+				<th data-width="20%" class="ao_line-in" data-field="createdate" data-align="center"
 					data-cell-style="dateStyle">创建时间</th>
-				<th class="ao_line-in" data-field="rowOption" data-align="center"
+				<th data-width="20%" class="ao_line-in" data-field="rowOption" data-align="center"
 					data-cell-style="operStyle">操作</th>
 				<th data-field="id" data-align="left" data-visible="false">id</th>
+				<th data-field="name" data-align="left" data-visible="false">name</th>
 			</tr>
 		</thead>
 	</table>
@@ -104,6 +99,8 @@ body {
 				.each(
 						res.rows,
 						function(i, row) {
+							row.nameOption = "";
+							row.nameOption = "<a href='${ctx}/system/employeeUI?departmentId="+row.id+"'>"+row.name+"</a>";
 							row.rowOption = "";
 							row.rowOption += "<a style='margin-right:10px;' href='##' onclick='changeEmp("
 									+ row.id + ")'>部门员工转移</a>";

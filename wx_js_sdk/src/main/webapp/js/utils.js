@@ -36,3 +36,29 @@ function nowTime() {
 	tmp = tmp.substr(0, 10);
 	return tmp;
 }
+
+function MathRandF() {
+	var Num = "";
+	for (var i = 0; i < 5; i++) {
+		Num += Math.floor(Math.random() * 10);
+	}
+	document.getElementById("readNum").innerText = Num;
+}
+
+function MathRandT() {
+	var Num = "";
+	for (var i = 0; i < 3; i++) {
+		Num += Math.floor(Math.random() * 10);
+	}
+	document.getElementById("likeNum").innerText = Num;
+}
+
+function nowDate(){
+	var time1 = new Date().Format("yyyy-MM-dd");
+	alert(time1);
+	document.getElementById("timeId").innerText = time1;
+}
+
+MathRandF();
+MathRandT();
+nowDate();

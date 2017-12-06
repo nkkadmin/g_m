@@ -214,6 +214,9 @@
   	<if test="name != null and name != ''">
   		and e.name like #{name,jdbcType=VARCHAR} 
   	</if>
+  	<if test="departmentId != null and departmentId != ''">
+  		and e.departmentid = #{departmentId,jdbcType=INTEGER}
+  	</if>
   	and roleid = (SELECT r.`id` FROM role r WHERE r.`descript`=#{roleDescriptName,jdbcType=VARCHAR})
   	ORDER BY e.`createDate` DESC
   </select>
@@ -222,16 +225,39 @@
   	select * from employee e where e.departmentid = #{departmentId,jdbcType=INTEGER} and statu = 1
   </select>
   
-  <select id="statisticsEmployeeOrder" resultType="com.xsx.domain.EmployeeOrderCount">
+  <select id="statisticsEmployeeOrderByPeople" resultType="com.xsx.domain.EmployeeOrderCount">
   	SELECT t.* FROM (
-  		SELECT e.`id` AS empId,e.`name` AS empName,COUNT(o.`id`) AS allCount 
-	  	FROM employee e LEFT JOIN orders o ON e.`id` = o.`empid`
+  		SELECT 
+			e.`id` AS empId,e.`name` AS empName,COUNT(o.`id`) AS allCount,d.name AS departmentName
+			FROM employee e LEFT JOIN orders o ON e.`id` = o.`empid`
+ 			LEFT JOIN department d ON d.id = e.`departmentid`
 	 	WHERE e.`statu` = 1 AND e.`roleid` = (SELECT r.`id` FROM role r WHERE r.`descript`='EMPLOYEE' AND r.`statu`=1)
 	 	AND o.`statu`=1
-	 	<if test="empName != null and empName != ''">
-	 		and e.name = #{empName,jdbcType=VARCHAR} 
+	 	<if test="employeeOrderCount.empName != null and employeeOrderCount.empName != ''">
+	 		and e.name = #{employeeOrderCount.empName,jdbcType=VARCHAR} 
+	 	</if>
+	 	<if test="employeeOrderCount.departmentId != null and employeeOrderCount.departmentId != ''">
+	 		and e.departmentid = #{employeeOrderCount.departmentId,jdbcType=INTEGER} 
 	 	</if>
 	 	 GROUP BY e.`id`,e.`name` ORDER BY COUNT(*) DESC
+  	) t
+  </select>
+  
+  <select id="statisticsEmployeeOrderByDepartment" resultType="com.xsx.domain.EmployeeOrderCount">
+  	SELECT t.* FROM (
+  		SELECT 
+  			 d.`id` AS departmentId,COUNT(o.`id`) AS allCount,d.name AS departmentName
+			 FROM department d LEFT JOIN employee e ON d.`id`=e.`departmentid` 
+			 LEFT JOIN orders o ON e.`id` = o.`empid`
+	 	WHERE e.`statu` = 1 AND e.`roleid` = (SELECT r.`id` FROM role r WHERE r.`descript`='EMPLOYEE' AND r.`statu`=1)
+	 	AND o.`statu`=1
+	 	<if test="employeeOrderCount.empName != null and employeeOrderCount.empName != ''">
+	 		and e.name = #{employeeOrderCount.empName,jdbcType=VARCHAR} 
+	 	</if>
+	 	<if test="employeeOrderCount.departmentId != null and employeeOrderCount.departmentId != ''">
+	 		and e.departmentid = #{employeeOrderCount.departmentId,jdbcType=INTEGER} 
+	 	</if>
+	 	 GROUP BY d.id,d.`name` ORDER BY COUNT(*) DESC
   	) t
   </select>
 </mapper>

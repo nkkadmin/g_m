@@ -87,4 +87,14 @@ public class OrdersServiceImpl implements OrdersService {
 	public Orders selectByEmpIdAndClientIP(String clientIP, Integer id) {
 		return ordersMapper.selectByEmpIdAndClientIP(clientIP,id);
 	}
+
+	@Override
+	public Orders selectByPrimaryKey(Integer id) {
+		return ordersMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(Orders record) {
+		return ordersMapper.updateByPrimaryKeySelective(record);
+	}
 }

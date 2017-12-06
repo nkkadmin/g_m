@@ -103,7 +103,7 @@ public interface OrdersMapper {
 	 * @param page
 	 * @return
 	 */
-	List<Orders> selectAllOrders(Orders orders,Page<Orders> page);
+	List<Orders> selectAllOrders(@Param("order") Orders orders,Page<Orders> page);
 	
 	/**
 	 * 根据客户端ip和员工id查询
@@ -112,6 +112,9 @@ public interface OrdersMapper {
 	 * @return
 	 */
 	Orders selectByEmpIdAndClientIP(@Param("clientIP") String clientIP, @Param("empId") Integer empId);
+	
+	
+	Integer todayOrderCountByEmpIds(@Param("empIds") String empIds);
 	
 	
 }

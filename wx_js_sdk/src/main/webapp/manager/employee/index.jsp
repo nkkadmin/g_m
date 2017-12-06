@@ -47,17 +47,17 @@ body {
 		data-response-handler="responseHandler">
 		<thead>
 			<tr>
-				<th width="10%" class="ao_line-in" data-field="name" data-align="center"
+				<th data-width="10%" class="ao_line-in" data-field="name" data-align="center"
 					data-visible="true" data-cell-style="idStyle">姓名（登录账号）</th>
-				<th width="10%" class="ao_line-in" data-field="phone" data-align="center"
+				<th data-width="10%" class="ao_line-in" data-field="phone" data-align="center"
 					data-visible="true" data-cell-style="idStyle">电话</th>
-				<th width="10%" class="ao_line-in" data-field="departmentName"
+				<th data-width="10%" class="ao_line-in" data-field="departmentName"
 					data-align="center" data-visible="true" data-cell-style="idStyle">所属部门</th>
-				<th width="30%" class="ao_line-in" data-field="extensionurl" data-align="center"
+				<th data-width="20%" class="ao_line-in" data-field="extensionurl" data-align="center"
 					data-visible="true" data-cell-style="idStyle">推广链接</th>
-				<th width="20%" class="ao_line-in" data-field="createdate" data-align="center"
+				<th data-width="10%" class="ao_line-in" data-field="createdate" data-align="center"
 					data-cell-style="dateStyle">创建时间</th>
-				<th width="20%" class="ao_line-in" data-field="rowOption" data-align="center"
+				<th data-width="20%" class="ao_line-in" data-field="rowOption" data-align="center"
 					data-cell-style="operStyle">操作</th>
 				<th data-field="id" data-align="left" data-visible="false">id</th>
 			</tr> 
@@ -110,6 +110,7 @@ body {
 		params.pageNo = params.pageNumber;// 当前页
 		params.pageSize = params.pageSize;// 每页记录数
 		params.name = $("#searchKey").val();
+		params.departmentid = '${departmentId}';
 		return params;
 	}
 
@@ -183,7 +184,7 @@ body {
 						$.alert(data != null ? data.message : "删除失败",
 								data.message, "系统提示");
 						$("#evaluationList").bootstrapTable('refresh', {
-							url : '${ctx}/employee/selectAllEmp'
+							url : '${ctx}/system/selectAllEmp'
 						});
 					},
 					error : function(data) {

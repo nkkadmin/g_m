@@ -47,7 +47,7 @@ public class RequestUtils {
 				} catch (UnknownHostException e) {
 					e.printStackTrace();
 				}
-				ipAddress = inetAddress.getHostAddress();
+				ipAddress = inetAddress != null ? inetAddress.getHostAddress() : null;
 			}
 		}
 		// 对于通过多个代理的情况，第一个IP为客户端真实的IP地址，多个IP按照','分割

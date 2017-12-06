@@ -93,13 +93,19 @@ public class EmployeeController extends BaseController {
 	@RequestMapping(value = "/logOut", method = RequestMethod.POST)
 	public AjaxJson logOut(Integer empId) {
 		AjaxJson json = new AjaxJson();
-		String message = logOutImp(empId, Constants.CURRENTP_SESSION_EMP);
-		if (message != null && message.equals("退出成功")) {
-			json.setSuccess(true);
-		} else {
+		try {
+			String message = logOutImp(empId, Constants.CURRENTP_SESSION_EMP);
+			if (message != null && message.equals("退出成功")) {
+				json.setSuccess(true);
+			} else {
+				json.setSuccess(false);
+			}
+			json.setMessage(message);
+		} catch (Exception e) {
+			e.printStackTrace();
+			json.setMessage("退出失败");
 			json.setSuccess(false);
 		}
-		json.setMessage(message);
 		return json;
 	}
 
@@ -131,10 +137,9 @@ public class EmployeeController extends BaseController {
 	public ModelAndView selectEmpExtensionUrl(Integer empId) {
 		ModelAndView mv = new ModelAndView("extensionUrl");
 		try {
-			if (getCurrentEmpSession() != null
-					&& getCurrentEmpSession().getId() == empId) {
-				mv.addObject("extensionUrl", getCurrentEmpSession()
-						.getExtensionurl());
+			Employee employee = getCurrentEmpSession();
+			if (employee != null && employee.getId().equals(empId)) {
+				mv.addObject("extensionUrl", employee.getExtensionurl());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -152,10 +157,9 @@ public class EmployeeController extends BaseController {
 	public ModelAndView selectEmpExtensionCore(Integer empId) {
 		ModelAndView mv = new ModelAndView("extensionCore");
 		try {
-			if (getCurrentEmpSession() != null
-					&& getCurrentEmpSession().getId() == empId) {
-				mv.addObject("extensionCore", getCurrentEmpSession()
-						.getExtensioncore());
+			Employee employee = getCurrentEmpSession();
+			if ( employee != null && employee.getId().equals(empId)) {
+				mv.addObject("extensionCore", employee.getExtensioncore());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -163,7 +167,4 @@ public class EmployeeController extends BaseController {
 		return mv;
 	}
 
-	
-
-	
 }

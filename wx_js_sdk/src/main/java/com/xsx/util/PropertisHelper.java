@@ -1,6 +1,5 @@
 package com.xsx.util;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -78,7 +77,9 @@ public class PropertisHelper {
 			e.printStackTrace();
 		}finally{
 			try {
-				in.close();
+				if(in != null){
+					in.close();
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -98,7 +99,7 @@ public class PropertisHelper {
 			in = PropertisHelper.class.getClassLoader().getResourceAsStream(fileName);
 			properties.load(in);
 			Set<String> keys = properties.stringPropertyNames();
-			String[] value = null;
+			String[] value = new String[keys.size()];
 			int num = 0;
 			for(String keyName : keys){
 				value[num] = properties.getProperty(keyName);
@@ -109,7 +110,9 @@ public class PropertisHelper {
 			e.printStackTrace();
 		}finally{
 			try {
-				in.close();
+				if(in != null){
+					in.close();
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

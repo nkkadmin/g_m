@@ -38,6 +38,10 @@ public class OrderController extends BaseController {
 	@RequestMapping(value = "/allOrder", method = RequestMethod.POST)
 	public Page<Orders> allOrder(Orders order, Page<Orders> page) {
 		try {
+			if (order != null && !StringHelper.isEmpty(order.getReceiptname())) {
+				order.setReceiptname(new String(order.getReceiptname()
+						.getBytes("ISO8859-1"), "UTF-8"));
+			}
 			page = ordersService.selectAllOrders(order, page);
 			return page;
 		} catch (Exception e) {
@@ -78,11 +82,13 @@ public class OrderController extends BaseController {
 				json.setSuccess(false);
 				return json;
 			}
+			// 获取客户端的ip
 			String clientIP = RequestUtils.getIpAddress(request);
-			
 			// 校验该链接的code和empId
 			Employee employee = employeeService.selectByPrimaryKey(order
 					.getEmpid());
+			System.out.println("emp>>>>>>" + employee);
+			System.out.println("code>>>>>" + code);
 			if (employee == null
 					|| (employee != null && !employee.getExtensionrandomcode()
 							.equals(code))) {
@@ -92,11 +98,14 @@ public class OrderController extends BaseController {
 			}
 			order.setReceiptaddress(province + " " + city + " " + district
 					+ " " + detailaddress);
-			if(ordersService.insertSelective(order, clientIP, employee.getId()) == 1){
+			if (ordersService
+					.insertSelective(order, clientIP, employee.getId()) == 1) {
 				json.setMessage("下单成功");
 				json.setSuccess(true);
 				return json;
 			}
+			json.setMessage("下单失败");
+			json.setSuccess(false);
 		} catch (Exception e) {
 			e.printStackTrace();
 			json.setMessage(e.getMessage());
@@ -104,7 +113,6 @@ public class OrderController extends BaseController {
 		}
 		return json;
 	}
-
 
 	/**
 	 * 删除订单

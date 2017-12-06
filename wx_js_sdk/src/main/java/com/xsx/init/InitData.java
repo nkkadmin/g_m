@@ -59,8 +59,8 @@ public class InitData implements ApplicationListener {
 		if(employeeService.countAll() < 1){
 			Employee employee = new Employee();
 			employee.setName("company");
-			employee.setPhone("15821292493");
-			employee.setPassword("123456");
+			employee.setPhone("15821287764");
+			employee.setPassword("admin");
 			employee.setRoleid(roleMapper.selectByDescript(Constants.ROLE_COMMPANY).getId());
 			employee.setCreatedate(DateHelper.nowDate());
 			employee.setImg("img/headpro/default.png");

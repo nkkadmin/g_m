@@ -12,118 +12,208 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.xsx.domain.Ips;
 import com.xsx.domain.WxInfo;
 import com.xsx.service.WxInfoService;
 import com.xsx.util.Decript;
 import com.xsx.util.StringHelper;
-import com.xsx.util.wxJsSdk.WXJsSdkAPIUtils;
+import com.xsx.util.wxJsSdk.WXJsSdkAPI;
 
-
+/**
+ * 
+ * @Title: ShopController.java 
+ * @Package com.xsx.controller 
+ * @Description: 商品详情页，也就是分享页面的Controller
+ * @author xsx
+ * @date 2017年11月24日 下午9:52:47 
+ * @version V1.0
+ */
 @Controller
 @RequestMapping("/shop")
-public class ShopController {
-	
+public class ShopController extends BaseController {
+
 	@Resource
 	private WxInfoService wxInfoService;
 
-	@RequestMapping(value="/info")
-	public ModelAndView info(Integer empId,String code,HttpServletRequest request){
+	/**
+	 * 商品详情页，分享页面
+	 * @param empId
+	 * @param code
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/info")
+	public ModelAndView info(Integer empId, String code,HttpServletRequest request) {
+		String dmUrl = getEffectivDomainName();
+		String domainUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+				+ request.getContextPath();
+//		String redirectUrl = (dmUrl == null ? domainUrl : "http://"+dmUrl) + "/shop/infoTrue?code="+code+ "&empId="+empId;
+		String redirectUrl = (dmUrl == null ? domainUrl : "http://"+dmUrl) + "/shop/shopSub?code="+code+ "&empId="+empId;
+		return new ModelAndView("redirect:"+redirectUrl);
+	}
+	
+	@RequestMapping(value = "/infoTrue")
+	public ModelAndView infoTrue(Integer empId, String code,
+			HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("shopInfo");
 		mv.addObject("empId", empId);
 		mv.addObject("code", code);
-		String jurl = request.getScheme()+"://"+request.getServerName() + request.getContextPath() + "/shop/shopSub?empId="+empId+"&&code="+code;
+		//分享成功后，回调跳转页面路径
+		String domainUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+				+ request.getContextPath();
+		String jurl = domainUrl + "/shop/shopSub?empId=" + empId
+				+ "&&code=" + code;
 		mv.addObject("jurl", jurl);
-		//时间戳
-		String timestamp = String.valueOf(new Date().getTime()).substring(0, 10);
-		//生成签名的随机串
-		String nonceStr = UUID.randomUUID().toString().replace("-", "").substring(0, 15);
+		// 时间戳
+		String timestamp = String.valueOf(new Date().getTime())
+				.substring(0, 10);
+		// 生成签名的随机串
+		String nonceStr = UUID.randomUUID().toString().replace("-", "")
+				.substring(0, 15);
 		String url = request.getRequestURL().toString();
-		if(request.getQueryString() != null){
+		if (request.getQueryString() != null) {
 			url = url + "?" + request.getQueryString();
 		}
-		//签名
-		String signature = null;
-		String accessToken = getAccessToken();
-		System.out.println("====accessToken====:"+accessToken);
-		if(accessToken == null){
-			return null;
-		}
 		
-		String ticket = getTicket(accessToken);
+		// 签名
+		String signature = null;
+		String ticket = getTicket();
 		if (ticket != null && nonceStr != null && timestamp != null
 				&& url != null) {
 			String appStr = "jsapi_ticket=" + ticket + "&noncestr=" + nonceStr
 					+ "&timestamp=" + timestamp + "&url=" + url;
 			System.out.println(appStr);
 			signature = Decript.SHA1(appStr);
-			System.out.println("signature:"+signature);
+			System.out.println("signature:" + signature);
 		}
-		mv.addObject("appid", WXJsSdkAPIUtils.APPID);
+		mv.addObject("appid", WXJsSdkAPI.APPID);
 		mv.addObject("timestamp", timestamp);
 		mv.addObject("nonceStr", nonceStr);
 		mv.addObject("signature", signature);
 		return mv;
 	}
-	
+
+	/**
+	 * 获取有效域名
+	 * @return
+	 */
+	private String getEffectivDomainName() {
+		//得到全部域名
+		Ips ip = ipsService.seleceIpOne();
+		return ip != null ? ip.getName() : null;
+	}
+
+	/**
+	 * 三十分钟后情况微信tokensession，用于更新token
+	 */
+	private synchronized void threadTime() {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				int i = 1;
+				while (i <= 3600) {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					i++;
+				}
+				wxInfoService.deleteAll();
+			}
+		}).start();
+	}
+
 	/**
 	 * 获取微信ticket
+	 * 
 	 * @param accessToken
 	 * @return
 	 */
-	private String getTicket(String accessToken){
-		List<WxInfo> list = getWxInfoList();
+	private String getTicket() {
 		String ticket = null;
-		if(list == null){
-			return null;
-		}else if(!StringHelper.isEmpty(list.get(0).getJsapiticket())){
-			ticket = list.get(0).getJsapiticket();
-		}else{
-			Map<String, Object> ticketMap = WXJsSdkAPIUtils.getTicket(accessToken);
-			ticket = (ticketMap != null && ticketMap.get("ticket") != null) ? ticketMap.get("ticket").toString() : null;
-			WxInfo info = list.get(0);
-			info.setJsapiticket(ticket);
-			wxInfoService.updateByPrimaryKeySelective(info);
+		try {
+			List<WxInfo> list = getWxInfoList();
+			System.out.println("in db value is : " + list);
+			if (list == null
+					|| (list != null && StringHelper.isEmpty(list.get(0)
+							.getAccesstoken()))
+					|| (list != null && StringHelper.isEmpty(list.get(0)
+							.getJsapiticket()))) {
+				wxInfoService.deleteAll();
+				WXJsSdkAPI api = new WXJsSdkAPI();
+				// 发送http请求获取
+				Map<String, Object> tokenMap = api.getAccessToken();
+				System.out.println(">>>>>>通过http请求获取Access：<<<<<<<" + tokenMap);
+				if (tokenMap != null && tokenMap.get("access_token") != null) {
+					String token = tokenMap.get("access_token").toString();
+					Map<String, Object> ticketMap = api.getTicketValue(token);
+					System.out.println(">>>>>>通过http请求获取ticketMap：<<<<<<<"
+							+ ticketMap);
+					if (ticketMap != null && ticketMap.get("ticket") != null) {
+						ticket = (String) ticketMap.get("ticket");
+						WxInfo wxInfo = new WxInfo();
+						wxInfo.setAccesstoken(token);
+						wxInfo.setJsapiticket(ticket);
+						wxInfoService.insertSelective(wxInfo);
+						threadTime();
+					} else {
+						System.out
+								.println(">>>>>>通过http请求获取ticketMap失败<<<<<<<");
+					}
+				} else {
+					System.out.println(">>>>>>>>>通过http请求获取ticketMap失败<<<<<");
+				}
+			} else if (list != null
+					&& !StringHelper.isEmpty(list.get(0).getJsapiticket())) {
+				WxInfo wxInfo = (WxInfo) list.get(0);
+				ticket = wxInfo.getJsapiticket();
+			}
+			return ticket;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return ticket;
 	}
-	
-	/**
-	 * 获取accessToken
-	 * @return
-	 */
-	private String getAccessToken(){
-		List<WxInfo> list = getWxInfoList();
-		String accessToken = null;
-		if(list == null || (list != null &&  StringHelper.isEmpty(list.get(0).getAccesstoken()))){ //重新调接口获取
-			Map<String, Object> tokenMap = WXJsSdkAPIUtils.getAccessToken();
-			System.out.println("tokenMap:"+tokenMap);
-			accessToken = (tokenMap != null && tokenMap.get("access_token") != null) ? tokenMap.get("access_token").toString() : null;
-			//如果表中有数据，但AccessToken为空，则需要先清空表
-			wxInfoService.deleteAll();
-			//添加新数据
-			WxInfo wxInfo = new WxInfo();
-			wxInfo.setAccesstoken(accessToken);
-			wxInfoService.insertSelective(wxInfo);
-		}else{//直接重库里取
-			accessToken = list.get(0).getAccesstoken();
-		}
-		return accessToken;
-	}
-	
-	
-	private List<WxInfo> getWxInfoList(){
+
+	private List<WxInfo> getWxInfoList() {
 		List<WxInfo> list = wxInfoService.selectAll();
-		if(list == null || list.size() == 0){
+		if (list == null || list.size() == 0) {
 			return null;
 		}
 		return list;
 	}
 	
-	@RequestMapping(value="/shopSub")
-	public ModelAndView shopSub(Integer empId,String code,HttpServletRequest request){
+	/**
+	 * 分享成功后，用户提交表单页面
+	 * @param empId
+	 * @param code
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/shopSub")
+	public ModelAndView shopSub(Integer empId, String code,
+			HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("shopSub");
 		mv.addObject("empId", empId);
 		mv.addObject("code", code);
+		return mv;
+	}
+	
+	@RequestMapping(value = "/report")
+	public ModelAndView report() {
+		ModelAndView mv = new ModelAndView("report");
+		return mv;
+	}
+	@RequestMapping(value = "/result")
+	public ModelAndView result() {
+		ModelAndView mv = new ModelAndView("result");
+		return mv;
+	}
+	
+	@RequestMapping(value = "/luke")
+	public ModelAndView luke() {
+		ModelAndView mv = new ModelAndView("NewFile");
 		return mv;
 	}
 }
