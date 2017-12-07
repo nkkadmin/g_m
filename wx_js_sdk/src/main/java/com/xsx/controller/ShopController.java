@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -39,21 +40,50 @@ public class ShopController extends BaseController {
 	 * 商品详情页，分享页面
 	 * @param empId
 	 * @param code
+	 * @param type: f:免接口  t:需要接口
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/info")
-	public ModelAndView info(Integer empId, String code,HttpServletRequest request) {
+	@RequestMapping(value = "/info/{empId}/{code}/{time}/{type}")
+	public ModelAndView info(@PathVariable("empId") Integer empId,@PathVariable("code") String code,
+			@PathVariable("type") String type, HttpServletRequest request) {
 		String dmUrl = getEffectivDomainName();
 		String domainUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 				+ request.getContextPath();
-//		String redirectUrl = (dmUrl == null ? domainUrl : "http://"+dmUrl) + "/shop/infoTrue?code="+code+ "&empId="+empId;
-		String redirectUrl = (dmUrl == null ? domainUrl : "http://"+dmUrl) + "/shop/shopSub?code="+code+ "&empId="+empId;
+		//String redirectUrl = "http://localhost:8090/wx_js_sdk/shop/"+(type.equals("t") ? "infoTrue" : "infoImpFalse")+"/"+empId+ "/"+code+"/"+new Date().getTime();
+		String redirectUrl = "http://"+(dmUrl != null ? dmUrl : domainUrl)+"/shop/"+(type.equals("t") ? "infoTrue" : "infoImpFalse")+"/"+empId+ "/"+code+"/"+new Date().getTime();
 		return new ModelAndView("redirect:"+redirectUrl);
 	}
 	
-	@RequestMapping(value = "/infoTrue")
-	public ModelAndView infoTrue(Integer empId, String code,
+	/**
+	 * 免接口分享頁面
+	 * @param empId
+	 * @param code
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/infoImpFalse/{empId}/{code}/{time}")
+	public ModelAndView infoImpFalse(@PathVariable("empId") Integer empId,@PathVariable("code") String code,
+			HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("imlfalse");
+		//分享成功后，回调跳转页面路径
+		String domainUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+				+ request.getContextPath();
+		String jurl = domainUrl + "/shop/shopSub/" + empId +"/" + code+"/"+new Date().getTime();
+		mv.addObject("jurl", jurl);
+		return mv;
+	}
+	
+	
+	/**
+	 * 接口分享
+	 * @param empId
+	 * @param code
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/infoTrue/{empId}/{code}/{time}")
+	public ModelAndView infoTrue(@PathVariable("empId") Integer empId,@PathVariable("empId") String code,
 			HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("shopInfo");
 		mv.addObject("empId", empId);
@@ -61,8 +91,7 @@ public class ShopController extends BaseController {
 		//分享成功后，回调跳转页面路径
 		String domainUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 				+ request.getContextPath();
-		String jurl = domainUrl + "/shop/shopSub?empId=" + empId
-				+ "&&code=" + code;
+		String jurl = domainUrl + "/shop/shopSub/" + empId +"/" + code+"/"+new Date().getTime();
 		mv.addObject("jurl", jurl);
 		// 时间戳
 		String timestamp = String.valueOf(new Date().getTime())
@@ -191,8 +220,8 @@ public class ShopController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/shopSub")
-	public ModelAndView shopSub(Integer empId, String code,
+	@RequestMapping(value = "/shopSub/{empId}/{code}/{time}")
+	public ModelAndView shopSub(@PathVariable("empId") Integer empId,@PathVariable("code") String code,
 			HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("shopSub");
 		mv.addObject("empId", empId);
@@ -211,9 +240,5 @@ public class ShopController extends BaseController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/luke")
-	public ModelAndView luke() {
-		ModelAndView mv = new ModelAndView("NewFile");
-		return mv;
-	}
+ 
 }

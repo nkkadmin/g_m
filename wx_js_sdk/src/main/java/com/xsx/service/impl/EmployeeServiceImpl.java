@@ -1,5 +1,6 @@
 package com.xsx.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -127,7 +128,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 				roleDescriptName, page);
 		for(Employee e :list){
 			//生成分享链接
-			e.setExtensionurl(hostName + "/shop/info?empId="+e.getId()+"&code="+e.getExtensionrandomcode());
+			e.setExtensionurl(hostName + "/shop/info/"+e.getId()+"/"+e.getExtensionrandomcode()+"/"+new Date().getTime()+"/f");
 		}
 		page.setRows(list);
 		return page;
