@@ -1,0 +1,62 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>免公众号-黑科技</title>
+</head>
+<body>
+<p>
+    <span style="box-sizing: border-box; color: rgb(51, 51, 51); font-family: 宋体; font-size: 14px; line-height: 26px; background-color: rgb(255, 255, 255);">1、兼容安卓、苹果IOS微信客户端；</span><br/><span style="box-sizing: border-box; color: rgb(51, 51, 51); font-family: 宋体; font-size: 14px; line-height: 26px; background-color: rgb(255, 255, 255);">2、可以识别是否真的分享到朋友圈、分享好友，地调用微信官方JS-SDK接口；</span><br/><span style="box-sizing: border-box; color: rgb(51, 51, 51); font-family: 宋体; font-size: 14px; line-height: 26px; background-color: rgb(255, 255, 255);">3、不需要认证公众号（认证一个微信公众号需要300元，如果被封了，你心疼吗？）；</span><br/><span style="box-sizing: border-box; color: rgb(51, 51, 51); font-family: 宋体; font-size: 14px; line-height: 26px; background-color: rgb(255, 255, 255);">4、域名不需要备案；</span><br/><span style="box-sizing: border-box; color: rgb(51, 51, 51); font-family: 宋体; font-size: 14px; line-height: 26px; background-color: rgb(255, 255, 255);">5、微信黑科技Hook；</span><br/><span style="box-sizing: border-box; color: rgb(51, 51, 51); font-family: 宋体; font-size: 14px; line-height: 26px; background-color: rgb(255, 255, 255);">6、免接口分享的技术（无秘钥反编译微信的hook）；</span>
+</p>
+
+<h2>现在分享试试看吧...</h2>
+
+
+<!--免公众号技术JS-->
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script>
+
+var u = navigator.userAgent;
+var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+if(isiOS == true){
+	var wechatInfo = navigator.userAgent.match(/MicroMessenger\/([\d\.]+)/i) ;
+	if(wechatInfo[1] >= "6.5.22"){
+			var hiddenProperty = 'hidden' in document ? 'hidden' :  'webkitHidden' in document ? 'webkitHidden' :  'mozHidden' in document ? 'mozHidden' : null;
+			var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
+			var onVisibilityChange = function(){
+					if(!document[hiddenProperty]){
+						alert("分享成功,后面的操作可以自定义。");
+					}
+				}
+			document.addEventListener(visibilityChangeEvent, onVisibilityChange);		
+	}
+}
+var url = window.location.href;
+var sharedata = {
+	'title':'黑科技', //分享给朋友的标题
+	'link': url, //分享给朋友的链接
+	'imgUrl':'https://img.alicdn.com/imgextra/i1/2145921404/TB2qAu2Xf6H8KJjy0FjXXaXepXa_!!2145921404.jpg', //分享给朋友的图片
+	'desc':'微信免接口分享的技术（无秘钥反编译微信的hook）', //分享给朋友的描述
+	'qtitle':'黑科技', //分享到朋友圈的标题
+	'qlink':url,//分享到朋友圈的链接
+	'qimgUrl':'https://img.alicdn.com/imgextra/i1/2145921404/TB2qAu2Xf6H8KJjy0FjXXaXepXa_!!2145921404.jpg',//分享到朋友圈的图片
+	'success':function(res){
+		if(res == "friend"){
+					alert("分享成功,后面的操作可以自定义。");
+				}else{
+					alert("分享成功,后面的操作可以自定义。");
+			}
+	}
+};
+document.ontouchmove = function(e){e.preventDefault();} //禁止下拉代码
+/*document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {WeixinJSBridge.call('hideOptionMenu');});*/ //隐藏按钮代码
+</script>
+<script src="mjk.js"></script>
+
+
+
+
+
+</body>
+</html>
