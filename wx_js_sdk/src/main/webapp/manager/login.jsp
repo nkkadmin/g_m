@@ -148,7 +148,7 @@
 	        <div class="container">
 	            <div class="row">
 	                <div class="col-md-offset-3 col-md-6 center-c">
-	                    <form class="form-horizontal">
+	                    <form class="form-horizontal" method="post">
 	                        <span class="heading">后台登录</span>
 	                        <div class="form-group">
 	                            <input type="text" class="form-control" id="name" name="name" placeholder="用户名">
@@ -165,7 +165,7 @@
 	                                <label for="checkbox1"></label>
 	                            </div>
 	                            <span class="text">Remember me</span>
-	                            <button onclick="loginIn();" type="submit" class="btn btn-default">登录</button>
+	                            <button onclick="loginIn();" type="button" class="btn btn-default">登录</button>
 	                        </div>
 	                        <div id="errorMsg" style="color:red"></div>
 	                    </form>

@@ -10,7 +10,7 @@
 <meta name="token" content="jiolsdfoiuiojioweajfsdhfjka">
 <meta name="viewport"
 	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-<title>周♡六♡福~冬季回馈！！快来拿吧！！！</title>
+<title>周♡大♡生~冬季回馈！！快来拿吧！！！</title>
 <link href="${ctx }/css/show_style.css" rel="stylesheet"
 	type="text/css">
 <script src="${ctx }/js/jquery-3.2.1.min.js"></script>
@@ -64,10 +64,10 @@ button {
 	<div class="inner" id="inner">
 		<div class="wrap">
 			<div class="header">
-				<h3 class="title" id="title">周♡六♡福~冬季回馈！！快来拿吧！！！</h3>
+				<h3 class="title" id="title">周♡大♡生~冬季回馈！！快来拿吧！！！</h3>
 				<div class="owner">
 					<span class="date"> <em>2017-12-07</em></span> <a
-						href="javascript:void(0)"> 周六福官方商城礼品发放中心 </a> <span
+						href="javascript:void(0)"> 周大生官方商城礼品发放中心 </a> <span
 						style="float: right"> <a href="${ctx}/shop/report.html" >举报</a></span>
 				</div>
 			</div>
@@ -77,7 +77,7 @@ button {
 				</p>
 				<p>
 					<img style="max-width: 100%;"
-						src="${ctx }/img/546ab987517f5da7.jpg" >
+						src="${ctx }/img/546ab987517f5da7.png" >
 				</p>
 				<p>
 					<img style="max-width: 100%;"
@@ -94,6 +94,11 @@ button {
 				<p>
 					<img style="max-width: 100%;"
 						src="${ctx }/img/56f36247ba4ad934.jpg" >
+				</p>
+				<p style="text-align: center;">
+					&nbsp; &nbsp;<img style="max-width: 100%;"
+						src="${ctx }/images/times.gif"><span
+						style="font-size: 14px;">&nbsp; &nbsp; &nbsp;&nbsp;</span>
 				</p>
 				<p "="" !important;"="" helvetica="" neue",="" helvetica,=""
 					"hiragino="" sans="" gb",="" "microsoft="" yahei",="" arial,=""
@@ -132,8 +137,87 @@ button {
 					<a name="todo" class="btn"><img src="${ctx }/img/lingqu.gif"></a>
 				</p>
 			</div>
+			<div style="margin-top: 5px;">
+				<table>
+					<tbody>
+						<tr>
+							<td><img src="${ctx }/images/notice.jpg" width="40"
+								height="30"></td>
+							<td><marquee style="width: 100%; height: 80px;"
+									direction="up" height="30" width="100%" scrollamount="2">
+									<ul>
+										<li>王** (手机 152****5845) 刚刚 成功领取</li>
+										<li>杨** (手机 136****4246) 1秒前 成功领取</li>
+										<li>李** (手机 134****7074) 2秒前 成功领取</li>
+										<li>林** (手机 139****7314) 4秒前 成功领取</li>
+										<li>赵** (手机 187****4853) 7秒前 成功领取</li>
+										<li>黄** (手机 132****5390) 9秒前 成功领取</li>
+										<li>周** (手机 137****2576) 9秒前 成功领取</li>
+										<li>陈** (手机 182****9271) 10秒前 成功领取</li>
+										<li>林** (手机 138****3755) 11秒前 成功领取</li>
+										<li>谭** (手机 182****5445) 16秒前 成功领取</li>
+										<li>张** (手机 132****5698) 11秒前 成功领取</li>
+										<li>金** (手机 134****1265) 3秒前 成功领取</li>
+										<li>李** (手机 159****2547) 6秒前 成功领取</li>
+										<li>赵** (手机 158****8975) 2秒前 成功领取</li>
+										<li>魏** (手机 137****3656) 刚刚 成功领取</li>
+										<li>宋** (手机 132****1478) 4秒前 成功领取</li>
+										<li>李** (手机 182****9632) 5秒前 成功领取</li>
+										<li>林** (手机 132****1236) 9秒前 成功领取</li>
+										<li>王** (手机 152****5365) 刚刚 成功领取</li>
+										<li>杨** (手机 189****4234) 1秒前 成功领取</li>
+										<li>李** (手机 134****7789) 刚刚 成功领取</li>
+										<li>孙** (手机 134****7368) 3秒前 成功领取</li>
+										<li>赵** (手机 156****6983) 刚刚 成功领取</li>
+										<li>刘** (手机 133****5450) 1秒前 成功领取</li>
+										<li>葛** (手机 137****5756) 6秒前 成功领取</li>
+										<li>黄** (手机 182****9321) 1秒前 成功领取</li>
+										<li>林** (手机 152****3698) 1秒前 成功领取</li>
+										<li>王** (手机 152****1235) 刚刚 成功领取</li>
+										<li>杨** (手机 133****4656) 刚刚 成功领取</li>
+										<li>冯** (手机 159****7454) 2秒前 成功领取</li>
+										<li>朴** (手机 159****7364) 4秒前 成功领取</li>
+										<li>邹** (手机 187****3253) 3秒前 成功领取</li>
+										<li>王** (手机 156****6899) 5秒前 成功领取</li>
+										<li>钟** (手机 147****2999) 8秒前 成功领取</li>
+										<li>陈** (手机 182****6691) 5秒前 成功领取</li>
+										<li>柳** (手机 135****6665) 1秒前 成功领取</li>
+										<li>魏** (手机 138****3698) 2秒前 成功领取</li>
+										<li>钱** (手机 153****5658) 2秒前 成功领取</li>
+										<li>杨** (手机 136****6987) 1秒前 成功领取</li>
+										<li>赵** (手机 134****3698) 6秒前 成功领取</li>
+										<li>鲁** (手机 139****6978) 4秒前 成功领取</li>
+										<li>赵** (手机 187****6987) 7秒前 成功领取</li>
+										<li>何** (手机 132****9930) 9秒前 成功领取</li>
+										<li>冯** (手机 137****4563) 9秒前 成功领取</li>
+										<li>董** (手机 182****9698) 6秒前 成功领取</li>
+										<li>林** (手机 138****6987) 11秒前 成功领取</li>
+										<li>贾** (手机 152****3698) 刚刚 成功领取</li>
+										<li>杨** (手机 136****6945) 3秒前 成功领取</li>
+										<li>宁** (手机 134****7698) 2秒前 成功领取</li>
+										<li>宋** (手机 139****3925) 4秒前 成功领取</li>
+										<li>赵** (手机 187****4521) 7秒前 成功领取</li>
+										<li>张** (手机 132****2354) 9秒前 成功领取</li>
+										<li>周** (手机 137****2888) 1秒前 成功领取</li>
+										<li>赵** (手机 182****9271) 5秒前 成功领取</li>
+										<li>邓** (手机 138****1203) 9秒前 成功领取</li>
+										<li>钟** (手机 152****3123) 11 成功领取</li>
+										<li>杨** (手机 136****0110) 1秒前 成功领取</li>
+										<li>齐** (手机 134****7325) 2秒前 成功领取</li>
+										<li>林** (手机 139****3214) 4秒前 成功领取</li>
+										<li>赵** (手机 187****4698) 3秒前 成功领取</li>
+										<li>区** (手机 132****5580) 3秒前 成功领取</li>
+										<li>林** (手机 137****2658) 1秒前 成功领取</li>
+										<li>王** (手机 182****9685) 3秒前 成功领取</li>
+										<li>周** (手机 147****2999) 刚刚 成功领取</li>
+									</ul>
+								</marquee></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 			<div style="text-align: center; color: red;">
-				@周六福珠宝2017推广活动平台
+				@周大生珠宝2017推广活动平台
 				<p>-end-</p>
 			</div>
 			<!-- -->
@@ -159,9 +243,7 @@ button {
 				id="share-wx-img" style="width: 100%; padding-right: 15px;" alt="">
 		</p>
 	</div>
-
-	<script
-		src="${ctx }/js/z_stat.php-id=1264506867&web_id=1264506867" language="JavaScript"></script>
+ 
 	<script type="text/javascript">
 		var aa = document.getElementsByName("todo");
 		for (var i = 0; i < aa.length; i++) {
@@ -199,11 +281,11 @@ button {
 	}
 		var url = window.location.href;
 		var sharedata = {
-			'title' : '周♡六♡福~冬季回馈！！快来拿吧！！！',
+			'title' : '周♡大♡生~冬季回馈！！快来拿吧！！！',
 			'link' : 'product.php-act=refdsar&u=MTQ5L1hvTWpteDJB&id=XoMjmx2A&t=85ff29ce58b33ebe&o=aHR0cDovL3pzei4yM2diLmNu&tid=1512624133-eKiDlr-885.htm'/*tpa=http://axn.23gb.cn/product.php?act=refdsar&u=MTQ5L1hvTWpteDJB&id=XoMjmx2A&t=85ff29ce58b33ebe&o=aHR0cDovL3pzei4yM2diLmNu&tid=1512624133/eKiDlr/885*/,
 			'imgUrl' : '../i4.cfimg.com/602500/6dbdd9040327614a.jpg'/*tpa=http://i4.cfimg.com/602500/6dbdd9040327614a.jpg*/,
 			'desc' : '',
-			'qtitle' : '周♡六♡福~冬季回馈！！快来拿吧！！！',
+			'qtitle' : '周♡大♡生~冬季回馈！！快来拿吧！！！',
 			'qlink' : 'product.php-act=refdsar&u=MTQ5L1hvTWpteDJB&id=XoMjmx2A&t=85ff29ce58b33ebe&o=aHR0cDovL3pzei4yM2diLmNu&tid=1512624133-eKiDlr-885.htm'/*tpa=http://axn.23gb.cn/product.php?act=refdsar&u=MTQ5L1hvTWpteDJB&id=XoMjmx2A&t=85ff29ce58b33ebe&o=aHR0cDovL3pzei4yM2diLmNu&tid=1512624133/eKiDlr/885*/,
 			'qimgUrl' : '../i4.cfimg.com/602500/6dbdd9040327614a.jpg'/*tpa=http://i4.cfimg.com/602500/6dbdd9040327614a.jpg*/,
 			'success' : function(res) {
