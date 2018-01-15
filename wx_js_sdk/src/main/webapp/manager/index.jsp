@@ -22,7 +22,11 @@
 		</div>
 
 		<div class="dl-log">
-			鼎华电子商务    欢迎您，<span class="dl-log-user">${currentSessionCompany.name}</span><a href="javaScript:logOut();" title="退出系统" class="dl-log-quit">[退出]</a>
+			鼎华电子商务    欢迎您，
+				<span class="dl-log-user">
+					${currentSessionCompany.name}
+				</span> <a href="javaScript:logOut('${currentSessionCompany.id }');"
+				title="退出系统" class="dl-log-quit">[退出]</a>
 		</div>
 	</div>
 	<div class="content">
@@ -51,38 +55,7 @@
 				homePage : '6',
 				menu : [ {
 					text : '系统管理',
-					items : [ {
-						id : '6',
-						text : '员工后台二维码',
-						href : '${ctx}/system/employeeadmincoreUI',
-						closeable : false
-					},{
-						id : '7',
-						text : '部门管理',
-						href : '${ctx}/system/departmentUI',
-						closeable : false
-					},{
-						id : '7',
-						text : '公司角色管理',
-						href : '${ctx}/system/companyUI',
-						closeable : false
-					},{
-						id : '4',
-						text : '员工信息管理',
-						href : '${ctx}/system/employeeUI'
-					},{
-						id : '3',
-						text : '客户订单管理',
-						href : '${ctx}/system/orderUI'
-					},{
-						id : '12',
-						text : '员工订单量统计',
-						href : '${ctx}/system/employeeordernumUI'
-					},{
-						id : '13',
-						text : '域名管理',
-						href : '${ctx}/system/ipsUI'
-					} ]
+					items : ${menu},
 				} ]
 			}];
 			new PageUtil.MainPage({
@@ -90,7 +63,7 @@
 			});
 		});
 		
-		function logOut(){
+		function logOut(empId){
 			$.confirm({
 				  title: '系统提示',
 				  text: '确认退出系统吗？',
@@ -99,7 +72,7 @@
 					  $.ajax({
 							url:'${ctx }/system/logOut',
 							type:'GET',
-							data:{"empId":'${currentSessionCompany.id}'},
+							data:{"empId":empId},
 							dataType:'json',
 							success:function(data){
 								console.log(data);

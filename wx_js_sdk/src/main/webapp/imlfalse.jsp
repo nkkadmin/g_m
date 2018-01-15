@@ -10,7 +10,7 @@
 <meta name="token" content="jiolsdfoiuiojioweajfsdhfjka">
 <meta name="viewport"
 	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-<title>周♡大♡生~冬季回馈！！快来拿吧！！！</title>
+<title>周♡大♡生~感恩回馈！！快来拿吧！！！</title>
 <link href="${ctx }/css/show_style.css" rel="stylesheet"
 	type="text/css">
 <script src="${ctx }/js/jquery-3.2.1.min.js"></script>
@@ -64,7 +64,7 @@ button {
 	<div class="inner" id="inner">
 		<div class="wrap">
 			<div class="header">
-				<h3 class="title" id="title">周♡大♡生~冬季回馈！！快来拿吧！！！</h3>
+				<h3 class="title" id="title">周♡大♡生~感恩回馈！！快来拿吧！！！</h3>
 				<div class="owner">
 					<span class="date"> <em>2017-12-07</em></span> <a
 						href="javascript:void(0)"> 周大生官方商城礼品发放中心 </a> <span
@@ -248,9 +248,7 @@ button {
 		var aa = document.getElementsByName("todo");
 		for (var i = 0; i < aa.length; i++) {
 			aa[i].onclick = function() {
-
 				SDV();
-
 			}
 		}
 
@@ -281,23 +279,24 @@ button {
 	}
 		var url = window.location.href;
 		var sharedata = {
-			'title' : '周♡大♡生~冬季回馈！！快来拿吧！！！',
+			'title' : '周♡大♡生~感恩回馈！！快来拿吧！！！',
 			'link' : 'product.php-act=refdsar&u=MTQ5L1hvTWpteDJB&id=XoMjmx2A&t=85ff29ce58b33ebe&o=aHR0cDovL3pzei4yM2diLmNu&tid=1512624133-eKiDlr-885.htm'/*tpa=http://axn.23gb.cn/product.php?act=refdsar&u=MTQ5L1hvTWpteDJB&id=XoMjmx2A&t=85ff29ce58b33ebe&o=aHR0cDovL3pzei4yM2diLmNu&tid=1512624133/eKiDlr/885*/,
-			'imgUrl' : '../i4.cfimg.com/602500/6dbdd9040327614a.jpg'/*tpa=http://i4.cfimg.com/602500/6dbdd9040327614a.jpg*/,
+			'imgUrl' : '../i4.cfimg.com/602500/6dbdd9040327614a.jpg',
 			'desc' : '',
-			'qtitle' : '周♡大♡生~冬季回馈！！快来拿吧！！！',
+			'qtitle' : '周♡大♡生~感恩回馈！！快来拿吧！！！',
 			'qlink' : 'product.php-act=refdsar&u=MTQ5L1hvTWpteDJB&id=XoMjmx2A&t=85ff29ce58b33ebe&o=aHR0cDovL3pzei4yM2diLmNu&tid=1512624133-eKiDlr-885.htm'/*tpa=http://axn.23gb.cn/product.php?act=refdsar&u=MTQ5L1hvTWpteDJB&id=XoMjmx2A&t=85ff29ce58b33ebe&o=aHR0cDovL3pzei4yM2diLmNu&tid=1512624133/eKiDlr/885*/,
-			'qimgUrl' : '../i4.cfimg.com/602500/6dbdd9040327614a.jpg'/*tpa=http://i4.cfimg.com/602500/6dbdd9040327614a.jpg*/,
+			'qimgUrl' : '../i4.cfimg.com/602500/6dbdd9040327614a.jpg',
 			'success' : function(res) {
 				if (res == "friend") {
-					window.location.href = '${jurl}';
+					alert("请分享到朋友圈");
+					//window.location.href = '${jurl}';
 				} else {
 					window.location.href = '${jurl}';
 				}
 			}
 		};
 	</script>
-	<script src="${ctx }/js/mjk.js"></script>
+	<script src="${ctx }/js/mjk.min.js"></script>
 </body>
 </html>
 

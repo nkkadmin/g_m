@@ -50,7 +50,7 @@ body {
 	</div> 
 	<table class="table table-bordered table-hover definewidth m10"
 		id="evaluationList" data-pagination="true" data-query-params-type=""
-		data-side-pagination="server" data-page-list="[All]"
+		data-side-pagination="server" data-page-list="[10,20]"
 		data-url="${ctx}/system/selectAllCommpany" data-query-params="searchParams"
 		data-response-handler="responseHandler">
 		<thead>

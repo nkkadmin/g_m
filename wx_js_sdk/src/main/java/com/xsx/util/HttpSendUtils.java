@@ -20,17 +20,22 @@ public class HttpSendUtils {
 
 	private HttpSendUtils() {
 	}
+	
+	public static void main(String[] args) throws MalformedURLException, IOException {
+		String url = "http://qbview.url.cn/getResourceInfo?appid=31&url=http://www.amwoi.cn";
+		System.out.println(sendGet(url));
+	}
 
 
 	public static String sendGet(String url) throws MalformedURLException,
 			IOException {
-System.out.println("....send...GET...." + url);
 		HttpURLConnection connection = (HttpURLConnection) new URL(url)
 				.openConnection();
 		connection.setRequestMethod("GET");
 		connection.setRequestProperty("Accept-Charset", "utf-8");
 		connection.setRequestProperty("contentType", "utf-8");
 		connection.setReadTimeout(5000);
+		System.out.println(connection.getResponseCode());
 		if (connection.getResponseCode() == 200) {
 			String responseContent = readerContent(connection.getInputStream());
 			return responseContent;

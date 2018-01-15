@@ -42,7 +42,9 @@
     <!-- 自动扫描所有的mapper.xml对应的mapper接口文件 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
     	<property name="basePackage" value="com.xsx.mapper"></property>
-    </bean>    
+    </bean>  
+    
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />  
           
     <!-- 配置Mybatis的文件，mapperLocations配置**Mapper.xml文件位置，configLocation配置mybatis-config文件位置 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

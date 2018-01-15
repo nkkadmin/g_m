@@ -196,8 +196,23 @@
 			<artifactId>core</artifactId>
 			<version>3.3.1</version>
 		</dependency>
-		
-
+		<!-- https://mvnrepository.com/artifact/com.aliyun/aliyun-java-sdk-core -->
+		<dependency>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-java-sdk-core</artifactId>
+			<version>3.5.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.41</version>
+		</dependency>
+		<dependency>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>wx_js_sdk</finalName>

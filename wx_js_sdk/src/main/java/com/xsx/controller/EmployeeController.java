@@ -1,16 +1,25 @@
 package com.xsx.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.xsx.constant.Constants;
 import com.xsx.domain.AjaxJson;
 import com.xsx.domain.Employee;
+import com.xsx.domain.EmployeeExtension;
 import com.xsx.domain.EmployeeOrderCount;
 import com.xsx.domain.Orders;
 
@@ -44,8 +53,7 @@ public class EmployeeController extends BaseController {
 	public AjaxJson login(Employee employee) {
 		AjaxJson json = new AjaxJson();
 		try {
-			String message = loginImp(employee, Constants.ROLE_EMPLOYEE,
-					Constants.CURRENTP_SESSION_EMP);
+			String message = loginImp(employee);
 			if (message != null && message.equals("登录成功")) {
 				json.setSuccess(true);
 			} else {
@@ -166,5 +174,90 @@ public class EmployeeController extends BaseController {
 		}
 		return mv;
 	}
-
+	
+	/**
+	 * 员工微信链接内容页面，员工角色可以访问
+	 * @return
+	 */
+	@RequestMapping(value = "/extension", method = RequestMethod.GET)
+	public ModelAndView extension(HttpServletRequest request){
+		ModelAndView mv = new ModelAndView("/employee/extension");
+		Employee sessionEmp = (Employee) getSessionValue(Constants.CURRENTP_SESSION_EMP);
+		Integer employeeId = sessionEmp.getId();
+		EmployeeExtension employeeExtension = employeeExtensionService.selectByEmployeeId(employeeId);
+		mv.addObject("info", employeeExtension);
+		//二维码链接地址
+		String url = request.getScheme() + "://" + request.getServerName()
+				+ request.getContextPath() + "/shop/extensionJump/"+employeeId+"/"+new Date().getTime();
+		mv.addObject("url", url);
+		return mv;
+	}
+	
+	/**
+	 * 编辑员工微信链接内容，员工角色可以访问
+	 * @return
+	 *//*
+	@RequestMapping(value = "/editExtension", method = RequestMethod.POST)
+	public ModelAndView editExtension(EmployeeExtension employeeExtension){
+		try {
+			Employee sessionEmp = (Employee) getSessionValue(Constants.CURRENTP_SESSION_EMP);
+			employeeExtension.setContent(new String(employeeExtension.getContent().getBytes("ISO8859-1"),"UTF-8"));
+			employeeExtension.setEmployeeid(sessionEmp.getId());
+			employeeExtensionService.editContent(employeeExtension);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ModelAndView("redirect:employeeExtensionInfo");
+	}*/
+	
+	/**
+	 * 文件上传
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+	public AjaxJson uploadFile(MultipartFile file){
+		AjaxJson ajaxJson = new AjaxJson();
+		ajaxJson.setSuccess(false);
+		try {
+			String oldName = file.getOriginalFilename();
+			String webRootDir = getRequest().getRealPath("/");
+			String newName = UUID.randomUUID().toString() + oldName.substring(oldName.lastIndexOf("."),oldName.length());
+			String savePath = webRootDir + "/attached/" + newName;
+			File saveFile = new File(savePath);
+			file.transferTo(saveFile);
+			//保存到数据库
+			Employee sessionEmp = (Employee) getSessionValue(Constants.CURRENTP_SESSION_EMP);
+			EmployeeExtension employeeExtension = employeeExtensionService.selectByEmployeeId(sessionEmp.getId());
+			String oldUrl = null;
+			if(employeeExtension != null){
+				//获取原图片路径
+				oldUrl = employeeExtension.getContent();
+			}else{
+				employeeExtension = new EmployeeExtension();
+			}
+			String saveDbPath = getRequest().getScheme() + "://" + getRequest().getServerName();
+	        if (getRequest().getServerPort() != 80) {
+	        	saveDbPath += ":" + getRequest().getServerPort();
+	        }
+	        saveDbPath += "/attached/" + newName;
+			employeeExtension.setContent(saveDbPath);
+			employeeExtension.setEmployeeid(sessionEmp.getId());
+			employeeExtensionService.editContent(employeeExtension);
+			if(oldUrl != null){
+				oldUrl = webRootDir + "attached\\" + oldUrl.substring(oldUrl.lastIndexOf("/"), oldUrl.length());
+				//删除图片
+				File oldFile = new File(oldUrl);
+				oldFile.delete();
+			}
+			ajaxJson.setSuccess(true);
+			return ajaxJson;
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return ajaxJson;
+	}
 }

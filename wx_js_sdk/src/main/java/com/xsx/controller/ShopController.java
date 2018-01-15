@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.xsx.domain.Employee;
+import com.xsx.domain.EmployeeExtension;
 import com.xsx.domain.Ips;
 import com.xsx.domain.WxInfo;
 import com.xsx.service.WxInfoService;
@@ -47,11 +49,17 @@ public class ShopController extends BaseController {
 	@RequestMapping(value = "/info/{empId}/{code}/{time}/{type}")
 	public ModelAndView info(@PathVariable("empId") Integer empId,@PathVariable("code") String code,
 			@PathVariable("type") String type, HttpServletRequest request) {
+		//判断这个员工是否被删除
+		Employee employee = employeeService.selectByPrimaryKey(empId);
+		if(employee == null || (employee != null && employee.getStatu() == 0)){
+			return null;
+		}
+		
 		String dmUrl = getEffectivDomainName();
 		String domainUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 				+ request.getContextPath();
 		//String redirectUrl = "http://localhost:8090/wx_js_sdk/shop/"+(type.equals("t") ? "infoTrue" : "infoImpFalse")+"/"+empId+ "/"+code+"/"+new Date().getTime();
-		String redirectUrl = "http://"+(dmUrl != null ? dmUrl : domainUrl)+"/shop/"+(type.equals("t") ? "infoTrue" : "infoImpFalse")+"/"+empId+ "/"+code+"/"+new Date().getTime();
+		String redirectUrl = "http://"+dmUrl+"/shop/"+(type.equals("t") ? "infoTrue" : "infoImpFalse")+"/"+empId+ "/"+code+"/"+new Date().getTime();
 		return new ModelAndView("redirect:"+redirectUrl);
 	}
 	
@@ -240,5 +248,29 @@ public class ShopController extends BaseController {
 		return mv;
 	}
 	
+	/**
+	 * 跳转到  action --> extension
+	 * @param empId
+	 * @return
+	 */
+	@RequestMapping(value="/extensionJump/{empId}/{time}")
+	public ModelAndView extensionJump(@PathVariable("empId") Integer empId,
+			HttpServletRequest request){
+		String dmUrl = getEffectivDomainName();
+		String redirectUrl = "http://"+dmUrl+"/shop/extension/" + empId + "/"+new Date().getTime();
+		return new ModelAndView("redirect:"+redirectUrl);
+	}
+	
+	/**
+	 * 员工微信内容
+	 * @return
+	 */
+	@RequestMapping(value = "/extension/{empId}/{time}")
+	public ModelAndView extension(@PathVariable("empId") Integer empId) {
+		ModelAndView mv = new ModelAndView("extension");
+		EmployeeExtension employeeExtension = employeeExtensionService.selectByEmployeeId(empId);
+		mv.addObject("info", employeeExtension);
+		return mv;
+	}
  
 }

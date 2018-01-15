@@ -52,6 +52,8 @@
 		<div class="list-group">
 			<a href="${ctx }/employee/selectOrders?empId=${currentSessionEmp.id}" class="list-group-item">查看订单记录
 				<span class="glyphicon glyphicon-list-alt" aria-hidden="true" style="float: right"></span></a> 
+			<a href="${ctx }/employee/extension?empId=${currentSessionEmp.id}" class="list-group-item">微信链接管理
+				<span class="glyphicon glyphicon-list-alt" aria-hidden="true" style="float: right"></span></a> 
 			<a onclick="removeBindShoworHide()" class="list-group-item">退出登录
 				<span class="glyphicon glyphicon-fire" aria-hidden="true" style="float: right;"></span>
 			</a>

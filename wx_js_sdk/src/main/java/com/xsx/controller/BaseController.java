@@ -9,8 +9,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.xsx.constant.Constants;
 import com.xsx.domain.Employee;
+import com.xsx.domain.EmployeeExtension;
 import com.xsx.domain.Role;
 import com.xsx.service.DepartmentService;
+import com.xsx.service.EmployeeExtensionService;
 import com.xsx.service.EmployeeService;
 import com.xsx.service.IpsService;
 import com.xsx.service.OrdersService;
@@ -29,6 +31,8 @@ public class BaseController {
 	public DepartmentService departmentService;
 	@Resource
 	public IpsService ipsService;
+	@Resource
+	public EmployeeExtensionService employeeExtensionService;
 	
 
 	public HttpServletRequest getRequest() {
@@ -77,8 +81,7 @@ public class BaseController {
 	 * @param employee
 	 * @return
 	 */
-	public String loginImp(Employee employee, String roleDescript,
-			String sessionName) throws Exception {
+	public String loginImp(Employee employee) throws Exception {
 		if (employee == null || employee.getName() == null
 				|| employee.getPassword() == null) {
 			return "用户名和密码不能为空";
@@ -92,15 +95,17 @@ public class BaseController {
 				Role role = roleService.selectByPrimaryKey(dirEmployee
 						.getRoleid());
 				if (role != null && role.getDescript() != null
-						&& role.getDescript().equals(roleDescript)) {
-					setSession(sessionName, dirEmployee);
+						&& role.getDescript().equals(Constants.ROLE_COMMPANY)) {
+					setSession(Constants.CURRENTP_SESSION_COMPANY, dirEmployee);
 					return "登录成功";
-				} else {
-					return "不存在该账号信息";
+				} else if(role != null && role.getDescript() != null
+						&& role.getDescript().equals(Constants.ROLE_EMPLOYEE)){
+					setSession(Constants.CURRENTP_SESSION_EMP, dirEmployee);
+					return "登录成功";
 				}
 			}
 		}
-		return "用户名和密码不正确";
+		return "登录失败";
 	}
 
 	/**

@@ -45,7 +45,7 @@
         </tr>
         <tr>
         	<td width="10%" class="tableleft">收货人</td>
-        	<td>${order.receiptname }</td>
+        	<td><input type="text" value="${order.receiptname }" name="receiptname"/></td>
         </tr>
         <tr>
         	<td width="10%" class="tableleft">电话</td>

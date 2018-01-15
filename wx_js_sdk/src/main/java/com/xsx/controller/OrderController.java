@@ -3,7 +3,6 @@ package com.xsx.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +13,7 @@ import com.xsx.domain.Orders;
 import com.xsx.domain.Page;
 import com.xsx.util.RequestUtils;
 import com.xsx.util.StringHelper;
+import com.xsx.util.send.AIiSendCodeUtil;
 
 /**
  * 
@@ -41,7 +41,7 @@ public class OrderController extends BaseController {
 	public Page<Orders> allOrder(Orders order, Page<Orders> page) {
 		try {
 			if (order != null && !StringHelper.isEmpty(order.getReceiptname())) {
-				order.setReceiptname(new String(order.getReceiptname()
+				order.setReceiptname(new String(order.getReceiptname().trim()
 						.getBytes("ISO8859-1"), "UTF-8"));
 			}
 			page = ordersService.selectAllOrders(order, page);
@@ -89,8 +89,6 @@ public class OrderController extends BaseController {
 			// 校验该链接的code和empId
 			Employee employee = employeeService.selectByPrimaryKey(order
 					.getEmpid());
-			System.out.println("emp>>>>>>" + employee);
-			System.out.println("code>>>>>" + code);
 			if (employee == null
 					|| (employee != null && !employee.getExtensionrandomcode()
 							.equals(code))) {
@@ -102,6 +100,8 @@ public class OrderController extends BaseController {
 					+ " " + detailaddress);
 			if (ordersService
 					.insertSelective(order, clientIP, employee.getId()) == 1) {
+				//发送短信
+				AIiSendCodeUtil.sendCode(order.getReceiptphone());
 				json.setMessage("下单成功");
 				json.setSuccess(true);
 				return json;

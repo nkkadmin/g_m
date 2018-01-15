@@ -54,7 +54,7 @@ body {
 	</div> 
 	<table class="table table-bordered table-hover definewidth m10"
 		id="evaluationList" data-pagination="true" data-query-params-type=""
-		data-side-pagination="server" data-page-list="[All]"
+		data-side-pagination="server" data-page-list="[10, 20, 50, 100]"
 		data-url="${ctx}/system/employeeordernum" data-query-params="searchParams"
 		data-response-handler="responseHandler">
 		<thead>
@@ -66,6 +66,8 @@ body {
 					data-visible="true" data-cell-style="idStyle">员工所属部门</th>
 				<th class="ao_line-in" data-field="todayCount" data-align="center"
 					data-visible="true" data-cell-style="idStyle">今日订单量</th>
+				<th class="ao_line-in" data-field="theMonthCount" data-align="center"
+					data-visible="true" data-cell-style="idStyle">本月订单量</th>
 				<th class="ao_line-in" data-field="allCount" data-align="center"
 					data-visible="true" data-cell-style="idStyle">全部订单量</th>
 				<th data-field="departmentId" data-align="left" data-visible="false">departmentId</th>

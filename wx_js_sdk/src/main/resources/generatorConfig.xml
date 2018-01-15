@@ -27,7 +27,7 @@
 			targetProject="C:\\workspase\\study2\\g_m\\wx_js_sdk\\src\\main\\java" type="XMLMAPPER" />
 		
 		<!-- 不生成Example相关的代码 -->
-		<table tableName="ips" domainObjectName="Ips"
+		<table tableName="employeeExtension" domainObjectName="EmployeeExtension"
 			enableCountByExample="false" enableDeleteByExample="false"
 			enableUpdateByExample="false" enableSelectByExample="false" />
 	</context>

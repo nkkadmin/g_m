@@ -28,8 +28,8 @@ public class CheckCompanyLoginInterceptor extends HandlerInterceptorAdapter {
 		if(requestURI != null && (requestURI.endsWith("system/loginUI") || requestURI.endsWith("system/login"))){
 			return true;
 		}
-		Employee employee = (Employee) request.getSession().getAttribute(Constants.CURRENTP_SESSION_COMPANY);
-		if(employee != null){
+		Employee commpany = (Employee) request.getSession().getAttribute(Constants.CURRENTP_SESSION_COMPANY);
+		if(commpany != null){
 			return true;
 		}
 		dealUnLogin(request,response);

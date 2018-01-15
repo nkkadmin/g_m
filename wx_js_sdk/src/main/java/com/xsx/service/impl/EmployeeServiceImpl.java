@@ -160,6 +160,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			List<EmployeeOrderCount> list = employeeMapper.statisticsEmployeeOrderByPeople(employeeOrderCount,page);
 			for(EmployeeOrderCount emp : list){
 				emp.setTodayCount(ordersMapper.todayOrderCount(emp.getEmpId()));
+				emp.setTheMonthCount(ordersMapper.theMonthOrderCount(emp.getEmpId()));
 			}
 		}
 		if(employeeOrderCount != null && employeeOrderCount.getType() != null
@@ -173,8 +174,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 				for(Employee employee : emps){
 					empIds += employee.getId()+",";
 				}
-				empIds = empIds.equals("") ? "0" : empIds.substring(0, empIds.length()-1);
+				empIds = empIds.equals("") ? "0" : "(" + empIds.substring(0, empIds.length()-1) + ")";
 				emp.setTodayCount(ordersMapper.todayOrderCountByEmpIds(empIds));
+				emp.setTheMonthCount(ordersMapper.theMonthOrderCountByEmpIds(empIds));
 			}
 		}
 		return page;

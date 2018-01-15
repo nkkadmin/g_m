@@ -1,5 +1,6 @@
 package com.xsx.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xsx.constant.Constants;
 import com.xsx.domain.AjaxJson;
 import com.xsx.domain.Department;
 import com.xsx.domain.Employee;
+import com.xsx.domain.EmployeeExtension;
 import com.xsx.domain.EmployeeOrderCount;
 import com.xsx.domain.Ips;
 import com.xsx.domain.Orders;
@@ -72,8 +75,7 @@ public class SystemController extends BaseController {
 	public AjaxJson login(Employee employee) {
 		AjaxJson json = new AjaxJson();
 		try {
-			String message = loginImp(employee, Constants.ROLE_COMMPANY,
-					Constants.CURRENTP_SESSION_COMPANY);
+			String message = loginImp(employee);
 			if (message != null && message.equals("登录成功")) {
 				json.setSuccess(true);
 			} else {
@@ -99,8 +101,7 @@ public class SystemController extends BaseController {
 	public AjaxJson logOut(Integer empId) {
 		AjaxJson json = new AjaxJson();
 		try {
-			String message = logOutImp(empId,
-					Constants.CURRENTP_SESSION_COMPANY);
+			String message = logOutImp(empId,Constants.CURRENTP_SESSION_COMPANY);
 			if (message != null && message.equals("退出成功")) {
 				json.setSuccess(true);
 			} else {
@@ -123,6 +124,17 @@ public class SystemController extends BaseController {
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView index() {
 		ModelAndView mv = new ModelAndView("/manager/index");
+		String menuStr = "[{}]";
+		if(getSessionValue(Constants.CURRENTP_SESSION_COMPANY) != null){
+			menuStr =  "[{\"id\" : \"6\",\"text\" : \"员工后台二维码\",\"href\" : \"employeeadmincoreUI\",\"closeable\" : false},"
+					+ "{\"id\" : \"7\",\"text\" : \"部门管理\",\"href\" : \"departmentUI\",\"closeable\" : false},"
+					+ "{\"id\" : \"8\",\"text\" : \"公司角色管理\",\"href\": \"companyUI\",\"closeable\" : false},"
+					+ "{\"id\" : \"4\",\"text\" : \"员工信息管理\",\"href\": \"employeeUI\"},"
+					+ "{\"id\" : \"3\",\"text\" : \"客户订单管理\",\"href\": \"orderUI\"},"
+					+ "{\"id\" : \"12\",\"text\" : \"员工订单量统计\",\"href\": \"employeeordernumUI\"},"
+					+ "{\"id\" : \"13\",\"text\" : \"域名管理\",\"href\" : \"ipsUI\"}]";
+		}
+		mv.addObject("menu", JSONObject.parse(menuStr));
 		return mv;
 	}
 
@@ -500,7 +512,7 @@ public class SystemController extends BaseController {
 				if(ips.getId() != null && !ips.getId().equals("")){
 					//修改
 					Ips ip = ipsService.selectByPrimaryKey(ips.getId());
-					ip.setName(ips.getName());
+					ip.setName(ips.getName().trim());
 					ipsService.updateByPrimaryKeySelective(ip);
 					json.setSuccess(true);
 					json.setMessage("修改成功");
@@ -548,5 +560,7 @@ public class SystemController extends BaseController {
 		}
 		return json;
 	}
+	
+	
 	
 }

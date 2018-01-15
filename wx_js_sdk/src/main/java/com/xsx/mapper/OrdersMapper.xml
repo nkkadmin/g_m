@@ -182,18 +182,21 @@
 		#{empId,jdbcType=INTEGER} AND TO_DAYS(o.`createDate`) = TO_DAYS(NOW())
 	</select>
 	<select id="todayOrderCountByEmpIds" resultType="java.lang.Integer">
-		SELECT COUNT(*) AS todayCount FROM orders o WHERE statu = 1 AND o.`empid` in
-		(#{empIds,jdbcType=VARCHAR}) AND TO_DAYS(o.`createDate`) = TO_DAYS(NOW())
+		SELECT COUNT(o.id) AS todayCount FROM orders o WHERE statu = 1 AND o.`empid` in
+		${empIds} AND TO_DAYS(o.`createDate`) = TO_DAYS(NOW())
 	</select>
 	<select id="yesterOrderCount" resultType="java.lang.Integer">
 		SELECT COUNT(*) AS yesterCount FROM orders o WHERE statu = 1 AND o.`empid`=
-		#{empId,jdbcType=INTEGER} AND TO_DAYS(NOW()) - TO_DAYS(o.`createDate`)
-		= 1
+		#{empId,jdbcType=INTEGER} AND TO_DAYS(NOW()) - TO_DAYS(o.`createDate`) = 1
 	</select>
 	<select id="theMonthOrderCount" resultType="java.lang.Integer">
 		SELECT COUNT(*) AS theMonth FROM orders o WHERE statu = 1 AND o.`empid`=
 		#{empId,jdbcType=INTEGER} AND DATE_FORMAT(o.`createDate`, '%Y%m' ) =
 		DATE_FORMAT( CURDATE( ) , '%Y%m' )
+	</select>
+	<select id="theMonthOrderCountByEmpIds" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS theMonth FROM orders o WHERE statu = 1 AND o.`empid` in 
+		${empIds} AND DATE_FORMAT(o.`createDate`, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
 	</select>
 	<select id="lastMonthOrderCount" resultType="java.lang.Integer">
 		SELECT COUNT(*) AS lastMonth FROM orders o WHERE statu = 1 AND o.`empid`=
@@ -217,6 +220,9 @@
 		<where> o.`statu`= 1
 			<if test="order.receiptname != null and order.receiptname != ''">
 				and o.receiptname = #{order.receiptname,jdbcType=VARCHAR}
+			</if>
+			<if test="order.receiptphone != null and order.receiptphone != ''">
+				and o.receiptphone = #{order.receiptphone,jdbcType=VARCHAR}
 			</if>
 			<if test="order.empid != null and order.empid != ''">
 				and o.empid = #{order.empid,jdbcType=INTEGER}

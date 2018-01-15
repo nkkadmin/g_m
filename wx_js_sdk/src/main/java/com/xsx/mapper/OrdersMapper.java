@@ -72,6 +72,13 @@ public interface OrdersMapper {
 	 * @return
 	 */
 	Integer theMonthOrderCount(@Param("empId") Integer empId);
+	
+	/**
+	 * 查看多个员工本月订单量
+	 * @param empIds
+	 * @return
+	 */
+	Integer theMonthOrderCountByEmpIds(@Param("empIds") String empIds);
 
 	/**
 	 * 上月订单量
@@ -113,8 +120,12 @@ public interface OrdersMapper {
 	 */
 	Orders selectByEmpIdAndClientIP(@Param("clientIP") String clientIP, @Param("empId") Integer empId);
 	
-	
+	/**
+	 * 查询多个员工的订单量
+	 * @param empIds
+	 * @return
+	 */
 	Integer todayOrderCountByEmpIds(@Param("empIds") String empIds);
-	
+
 	
 }

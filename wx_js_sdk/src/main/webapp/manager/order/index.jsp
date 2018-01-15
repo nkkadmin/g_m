@@ -44,11 +44,14 @@ body {
 	<div class="form-inline definewidth m20">
 		收货人姓名： <input type="text" name="name" id="searchKey"
 			class="abc input-default" placeholder="" value="">&nbsp;&nbsp;
+		收货人手机号： <input type="text" name="phone" id="searchPhone"
+			class="abc input-default" placeholder="" value="">
 		<button class="btn btn-primary" onclick="search()">查询</button>
 	</div> 
 	<table class="table table-bordered table-hover definewidth m10"
 		id="evaluationList" data-pagination="true" data-query-params-type=""
-		data-side-pagination="server" data-page-list="[All]"
+		data-side-pagination="server" data-page-list="[100,50,10]"
+		data-page-size="100"
 		data-url="${ctx}/order/allOrder" data-query-params="searchParams"
 		data-response-handler="responseHandler">
 		<thead>
@@ -99,6 +102,7 @@ body {
 		params.pageNo = params.pageNumber;// 当前页
 		params.pageSize = params.pageSize;// 每页记录数
 		params.receiptname = $("#searchKey").val();
+		params.receiptphone = $("#searchPhone").val();
 		params.empid = '${empId}';
 		return params;
 	}

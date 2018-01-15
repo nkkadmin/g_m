@@ -10,7 +10,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
 	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-<title>周♡六♡福~冬季回馈！！快来拿吧！！！</title>
+<title>周♡大♡生~感恩回馈！！快来拿吧！！！</title>
 <link href="${ctx }/css/style.css" rel="stylesheet" type="text/css">
 <script src="${ctx }/js/jquery-3.2.1.min.js"></script>
 <script src="${ctx }/js/d.js"></script>
@@ -169,7 +169,7 @@ label.label_sel {
 								</div>
 							</div>
 							<input type="hidden" id="pattern" name="pattern"
-								value="周♡六♡福~冬季回馈！！快来拿吧！！！">
+								value="周♡六♡福~感恩回馈！！快来拿吧！！！">
 							<div class="field submit-field ">
 								<div class="value">
 									<input id="subbtn" type="button" class="btn btn-primary"
@@ -194,7 +194,6 @@ label.label_sel {
 				<span style="font-size: 18px;"> <span
 					style="color: rgb(255, 0, 0);">请您把领取成功后的此界面截图并裙发给您全部伙伴即可参加官方抽奖活动：
 						iPhone8、iPhonex 美图t8s 最低百元红包至千元红包不等(188.88－1888.88)。 </span>
-
 				</span>
 			</p>
 			<br />
