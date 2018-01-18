@@ -217,9 +217,7 @@ public class EmployeeController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-	public AjaxJson uploadFile(MultipartFile file){
-		AjaxJson ajaxJson = new AjaxJson();
-		ajaxJson.setSuccess(false);
+	public ModelAndView uploadFile(MultipartFile file){
 		try {
 			String oldName = file.getOriginalFilename();
 			String webRootDir = getRequest().getRealPath("/");
@@ -241,7 +239,7 @@ public class EmployeeController extends BaseController {
 	        if (getRequest().getServerPort() != 80) {
 	        	saveDbPath += ":" + getRequest().getServerPort();
 	        }
-	        saveDbPath += "/attached/" + newName;
+	        saveDbPath += getRequest().getContextPath() + "/attached/" + newName;
 			employeeExtension.setContent(saveDbPath);
 			employeeExtension.setEmployeeid(sessionEmp.getId());
 			employeeExtensionService.editContent(employeeExtension);
@@ -251,13 +249,12 @@ public class EmployeeController extends BaseController {
 				File oldFile = new File(oldUrl);
 				oldFile.delete();
 			}
-			ajaxJson.setSuccess(true);
-			return ajaxJson;
+			return new ModelAndView("redirect:extension");
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return ajaxJson;
+		return null;
 	}
 }
