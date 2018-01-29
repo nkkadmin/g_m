@@ -36,7 +36,7 @@ public class AIiSendCodeUtil {
 	}
 	
 	public static boolean sendCode(String phoneNumber){
-		return sendCode(phoneNumber, "SMS_121910540", null);
+		return sendCode(phoneNumber, "SMS_122289554", null);
 	}
 	
 	/**

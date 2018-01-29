@@ -1,6 +1,7 @@
 package com.xsx.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -139,4 +140,13 @@ public class OrderController extends BaseController {
 		}
 		return json;
 	}
+	
+	/**
+	 * export all orders
+	 */
+	/*@ResponseBody
+	@RequestMapping(value="/export")
+	public String exportOrderData(HttpServletResponse response){
+		return "想什么呢！！";
+	}*/
 }

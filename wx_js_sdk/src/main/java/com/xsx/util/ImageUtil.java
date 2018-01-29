@@ -78,7 +78,16 @@ public class ImageUtil {
 			graphics.setColor(new Color(255,255,255));
 			graphics.fillRect(0, 0, width, height);
 			graphics.drawImage(srcFile.getScaledInstance(width, height, Image.SCALE_SMOOTH), 0, 0, null);
-			ImageIO.write(buffImg, subfix, new File(srcImgPath));
+			File saveFile = new File(srcImgPath);
+			/*if(saveFile.isFile()){
+				long fileLength = saveFile.length() / 1024; //单位kb
+				if(fileLength > 100){
+					zipImageFile(saveFile, newFile, 0, 0, quality);
+				}else{
+					return newFile.getAbsolutePath();
+				}
+			}*/
+			ImageIO.write(buffImg, subfix, saveFile);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

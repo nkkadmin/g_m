@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +21,7 @@ import com.xsx.domain.Employee;
 import com.xsx.domain.EmployeeExtension;
 import com.xsx.domain.EmployeeOrderCount;
 import com.xsx.domain.Orders;
+import com.xsx.util.ImageUtil;
 
 /**
  * 
@@ -225,6 +225,14 @@ public class EmployeeController extends BaseController {
 			String savePath = webRootDir + "/attached/" + newName;
 			File saveFile = new File(savePath);
 			file.transferTo(saveFile);
+			//开个线程，将图片压缩在上传
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					ImageUtil.zipImageFile(saveFile, saveFile, 0, 0, 3f);
+				}
+			}).start();
+			
 			//保存到数据库
 			Employee sessionEmp = (Employee) getSessionValue(Constants.CURRENTP_SESSION_EMP);
 			EmployeeExtension employeeExtension = employeeExtensionService.selectByEmployeeId(sessionEmp.getId());

@@ -85,7 +85,6 @@ label.label_sel {
 				</div>
 			</div>
 		</div>
-
 		<div id="join_div">
 			<form class="center with-shadow" id="form1" method="post">
 				<div class="form-content">
@@ -183,46 +182,37 @@ label.label_sel {
 		</div>
 
 	</div>
-	<div style="display:none;"  id="success_div" class="success_div1">
-		<h4
-			"="" style="color: rgb(0, 0, 0); font-family: &amp; amp; amp; amp; quot; sans serif&amp;amp; amp; amp; quot; , tahoma , verdana, helvetica; text-align: center; font-size: 12px;">
-			<span style="color: rgb(255, 0, 0); font-size: large;"><b>恭喜您！订单成功提交！</b></span>
-		</h4>
+	<div style="display: none;"  id="success_div" class="success_div1">
 		<h4 style="text-align: center;">
 			<p font-size:medium;"=""
-				style="word-wrap: break-word; margin-top: 5px; margin-bottom: 5px; color: rgb(0, 0, 0); font-family: &amp; amp; amp; amp; quot; sans serif&amp;amp; amp; amp; quot; , tahoma , verdana, helvetica; font-size: 12px;">
-				<span style="font-size: 18px;"> <span
-					style="color: rgb(255, 0, 0);">请您把领取成功后的此界面截图并裙发给您全部伙伴即可参加官方抽奖活动：
-						iPhone8、iPhonex 美图t8s 最低百元红包至千元红包不等(188.88－1888.88)。 </span>
-				</span>
-			</p>
-			<br />
-			<br />
-			<p font-size:medium;"=""
-				style="word-wrap: break-word; margin-top: 5px; margin-bottom: 5px; color: rgb(0, 0, 0); font-family: &amp; amp; amp; amp; quot; sans serif&amp;amp; amp; amp; quot; , tahoma , verdana, helvetica; font-size: 12px;">
-				<span style="font-size: 18px;"> <span
-					style="color: rgb(255, 0, 0);">温馨提示ps：此活动在黄金吊坠活动结束后开始，凡是参加领取金苹果吊坠拍反馈图给客服的都可以领取到上述其中之一和66.66紅包。
-				</span>
-				</span>
-			</p>
-			<br />
-			<p font-size:medium;"=""
-				style="word-wrap: break-word; margin-top: 5px; margin-bottom: 5px; color: #000; font-family: &amp; amp; amp; amp; quot; sans serif&amp;amp; amp; amp; quot; , tahoma , verdana, helvetica; font-size: 12px;">
+				style="word-wrap: break-word; margin-top: 10px; margin-bottom: 5px; color: #000; font-family: &amp; amp; amp; amp; amp; quot; sans serif&amp;amp; amp; amp; amp; quot; , tahoma , verdana, helvetica; font-size: 12px;">
 				<span style="font-size: 18px;"><span style="color: #000;">公司将于48小时内统一快递发货，请您耐心等待3-5天左右。</span></span>
+			</p>
+			<img src="${ctx }/img/4c6a54bc7ed59e2a.jpg">
+			<p font-size:medium;"=""
+				style="word-wrap: break-word; margin-top: 5px; margin-bottom: 5px; color: rgb(0, 0, 0); font-family: &amp; amp; amp; amp; amp; quot; sans serif&amp;amp; amp; amp; amp; quot; , tahoma , verdana, helvetica; font-size: 12px;">
+				<span style="font-size: 18px;"> <span
+					style="color: rgb(255, 0, 0);font-weight: bold;">温馨提示：收到礼品支持开箱验货，支持各大金店检验。收到礼品的10个工作日内会由您当地所在周大生店面联系您到店面领取66.66紅包和参与下方所述抽取奖品活动(最低抽取188.88紅包)
+				</span>
+				</span>
+			</p>
+			<br />
+			<p font-size:medium;"=""
+				style="word-wrap: break-word; margin-top: 5px; margin-bottom: 5px; color: rgb(0, 0, 0); font-family: &amp; amp; amp; amp; amp; quot; sans serif&amp;amp; amp; amp; amp; quot; , tahoma , verdana, helvetica; font-size: 12px;">
+				<span style="font-size: 18px;font-weight: bold;"> <span
+					style="color: rgb(255, 0, 0);">收到礼品，签收拍照反馈即可参加官方抽奖活动：iPhone
+						8.iPhone x.美图T8s 最低百元紅包至千元紅包不等（188.88.-1888.88） </span>
+				</span>
 			</p>
 
 		</h4>
-		<p>
-			<br>
-		</p>
-		<img src="${ctx }/img/4c6a54bc7ed59e2a.jpg">
+
 	</div>
 
 	<script src="${ctx }/js/distpicker.data.js"></script>
 	<script src="${ctx }/js/distpicker.js"></script>
 	<script src="${ctx }/js/layer.min.js"></script>
 	<script>
-		  
 		function checkInput() {
 			$('#subbtn').attr("disabled", true);
 
