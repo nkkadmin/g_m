@@ -25,7 +25,39 @@ public class ImageUtil {
 	private ImageUtil(){}
 	
 	public static void main(String[] args) {
-		zipImageFile(new File("c:\\study\\aaa.jpg"), new File("c:\\study\\bbb.jpg"), 0, 0, 3f);
+//		zipImageFile(new File("c:\\study\\aaa.jpg"), new File("c:\\study\\bbb.jpg"), 0, 0, 3f);
+		readFolerImage("C:\\study\\attached");
+	}
+	
+	/**
+	 * 判断文件是否是图片
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 */
+	private static boolean isIamge(File file){
+		BufferedImage image = null;
+		try {
+			image = ImageIO.read(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return image != null ? true : false;
+	}
+	
+	/**
+	 * 读取指定文件夹下的所有图片,并压缩200k一下的文件
+	 * @param folerPath
+	 */
+	private static void readFolerImage(String folerPath){
+		File file = new File(folerPath);
+		File[] files = file.listFiles();
+		for(File f : files){
+			if(isIamge(f) && (f.length() / 1024) >= 200){
+//				System.out.println(f.getName() + ":" + f.length() / 1024);
+				zipImageFile(f, f, 0, 0, 3f);
+			}
+		}
 	}
 	
 	/**
@@ -64,7 +96,6 @@ public class ImageUtil {
 			}
 			
 			String srcImgPath = newFile.getAbsoluteFile().toString();
-			System.out.println("srcImgPath:"+srcImgPath);
 			String subfix = "jpg";
 			subfix = srcImgPath.substring(srcImgPath.lastIndexOf(".")+1, srcImgPath.length());
 			BufferedImage buffImg = null;

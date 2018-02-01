@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../common/taglibs.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="ctx" value="${pageContext.request.contextPath }"/>
 
 <!DOCTYPE html>
 <html>
@@ -8,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>我的订单</title>
+<title>微信二维码</title>
 <meta name="format-detection" content="telephone=no, address=no">
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-touch-fullscreen" content="yes" />
@@ -20,7 +21,6 @@
 <body> 
 	<div style="margin-top: 20px;text-align: center;" id="qrcode" class="num"></div>
 	<div style="text-align: center;font-weight: bolder;">浏览二维码</div>
-	
 	<script type="text/javascript">
 		var text = "${url}";
 		jQuery('#qrcode').qrcode({
@@ -42,6 +42,7 @@
 	
  	<form action="${ctx }/employee/uploadFile" onsubmit="return check();" name="example" style="margin: 40px 0px 0px 40px;" method="post" enctype="multipart/form-data">
 	   <input type="file" name="file" id="file" value="请选择图片"/>
+	   <input type="hidden" name="isZip" value="yes"/>
 	   <input type="submit" value="上传" />
 	</form>
 </body>

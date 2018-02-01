@@ -22,6 +22,7 @@ import com.xsx.domain.EmployeeExtension;
 import com.xsx.domain.EmployeeOrderCount;
 import com.xsx.domain.Orders;
 import com.xsx.util.ImageUtil;
+import com.xsx.util.StringHelper;
 
 /**
  * 
@@ -213,11 +214,12 @@ public class EmployeeController extends BaseController {
 	/**
 	 * 文件上传
 	 * @param request
+	 * @param isZip   是否需要压缩  yes / no
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-	public ModelAndView uploadFile(MultipartFile file){
+	public ModelAndView uploadFile(MultipartFile file,String isZip){
 		try {
 			String oldName = file.getOriginalFilename();
 			String webRootDir = getRequest().getRealPath("/");
@@ -225,13 +227,15 @@ public class EmployeeController extends BaseController {
 			String savePath = webRootDir + "/attached/" + newName;
 			File saveFile = new File(savePath);
 			file.transferTo(saveFile);
-			//开个线程，将图片压缩在上传
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					ImageUtil.zipImageFile(saveFile, saveFile, 0, 0, 3f);
-				}
-			}).start();
+			if(!StringHelper.isEmpty(isZip) && isZip.equals("yes")){
+				//开个线程，将图片压缩在上传
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						ImageUtil.zipImageFile(saveFile, saveFile, 0, 0, 3f);
+					}
+				}).start();
+			}
 			
 			//保存到数据库
 			Employee sessionEmp = (Employee) getSessionValue(Constants.CURRENTP_SESSION_EMP);
