@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.xsx.mapper.PhonePayTypeMapper;
 import com.xsx.service.PhonePayTypeService;
 
+
 @Service("phonePayTypeService")
 public class PhonePayTypeServiceImpl implements PhonePayTypeService {
 

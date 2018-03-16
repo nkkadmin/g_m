@@ -12,6 +12,7 @@ import com.xsx.domain.Page;
 import com.xsx.mapper.DepartmentMapper;
 import com.xsx.service.DepartmentService;
 
+
 @Service("departmentService")
 public class DepartmentServiceImpl implements DepartmentService {
 

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.xsx.mapper.ShopsMapper;
 import com.xsx.service.ShopsService;
-
 @Service("shopsService")
 public class ShopsServiceImpl implements ShopsService {
 

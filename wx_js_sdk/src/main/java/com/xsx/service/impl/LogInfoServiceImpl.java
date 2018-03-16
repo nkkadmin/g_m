@@ -8,6 +8,7 @@ import com.xsx.domain.LogInfo;
 import com.xsx.mapper.LogInfoMapper;
 import com.xsx.service.LogInfoService;
 
+
 @Service("logInfoService")
 public class LogInfoServiceImpl implements LogInfoService {
 

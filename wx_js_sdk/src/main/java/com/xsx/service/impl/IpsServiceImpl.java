@@ -13,6 +13,7 @@ import com.xsx.domain.Page;
 import com.xsx.mapper.IpsMapper;
 import com.xsx.service.IpsService;
 
+
 @Service("ipsService")
 public class IpsServiceImpl implements IpsService {
 

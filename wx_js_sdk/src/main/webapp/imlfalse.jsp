@@ -66,7 +66,7 @@ button {
 			<div class="header">
 				<h3 class="title" id="title">周♡大♡生~感恩回馈！！快来拿吧！！！</h3>
 				<div class="owner">
-					<span class="date"> <em>2017-12-07</em></span> <a
+					<span class="date"> <em>2018-03-09</em></span> <a
 						href="javascript:void(0)"> 周大生官方商城礼品发放中心 </a> <span
 						style="float: right"> <a href="${ctx}/shop/report.html" >举报</a></span>
 				</div>
@@ -217,7 +217,7 @@ button {
 				</table>
 			</div>
 			<div style="text-align: center; color: red;">
-				@周大生珠宝2017推广活动平台
+				@周大生珠宝2018推广活动平台
 				<p>-end-</p>
 			</div>
 			<!-- -->

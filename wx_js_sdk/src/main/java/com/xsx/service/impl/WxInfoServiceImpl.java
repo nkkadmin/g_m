@@ -20,6 +20,7 @@ import com.xsx.service.WxInfoService;
  * @date 2017年11月9日 上午10:40:08 
  * @version V1.0
  */
+
 @Service("wxInfoService")
 public class WxInfoServiceImpl implements WxInfoService {
 	

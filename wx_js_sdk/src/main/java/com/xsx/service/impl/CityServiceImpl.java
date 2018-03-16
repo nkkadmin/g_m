@@ -8,7 +8,6 @@ import com.xsx.mapper.CityMapper;
 import com.xsx.mapper.ProvinceMapper;
 import com.xsx.service.CityService;
 
-
 @Service("cityService")
 public class CityServiceImpl implements CityService {
 
