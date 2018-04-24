@@ -1,5 +1,7 @@
 package com.xsx.domain;
 
+import java.io.Serializable;
+
 /**
  * 
  * @Title: EmployeeOrderCount.java
@@ -9,8 +11,12 @@ package com.xsx.domain;
  * @date 2017年11月1日 下午1:55:39
  * @version V1.0
  */
-public class EmployeeOrderCount {
+public class EmployeeOrderCount implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8950576860428142585L;
 	// 员工id
 	private Integer empId;
 	//部门id

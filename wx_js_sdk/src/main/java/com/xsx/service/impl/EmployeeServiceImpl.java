@@ -1,11 +1,14 @@
 package com.xsx.service.impl;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.xsx.constant.Constants;
@@ -153,7 +156,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 			return 0;
 		}
 	}
-
+	
+	@Cacheable("statisticsEmployeeOrder")
 	@Override
 	public Page<EmployeeOrderCount> statisticsEmployeeOrder(EmployeeOrderCount employeeOrderCount, Page<EmployeeOrderCount> page) {
 		if(employeeOrderCount != null && employeeOrderCount.getType() != null
@@ -179,6 +183,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 				emp.setTodayCount(ordersMapper.todayOrderCountByEmpIds(empIds));
 				emp.setTheMonthCount(ordersMapper.theMonthOrderCountByEmpIds(empIds));
 			}
+		 
+			
 		}
 		return page;
 	}

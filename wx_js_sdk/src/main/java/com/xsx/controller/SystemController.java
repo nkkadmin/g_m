@@ -1,6 +1,5 @@
 package com.xsx.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +15,6 @@ import com.xsx.constant.Constants;
 import com.xsx.domain.AjaxJson;
 import com.xsx.domain.Department;
 import com.xsx.domain.Employee;
-import com.xsx.domain.EmployeeExtension;
 import com.xsx.domain.EmployeeOrderCount;
 import com.xsx.domain.Ips;
 import com.xsx.domain.Orders;
