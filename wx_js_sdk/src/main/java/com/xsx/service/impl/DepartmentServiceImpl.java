@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.xsx.constant.Constants;
@@ -61,7 +60,6 @@ public class DepartmentServiceImpl implements DepartmentService {
 		return page;
 	}
 	
-	@Cacheable("selectAllDepartment") //标注该方法查询的结果写入缓存，再次访问时直接读取缓存中的数据，缓存中的key就是：selectAllDepartment
 	@Override
 	public List<Department> selectAllDepartment() {
 		return departmentMapper.selectDepartmentList();

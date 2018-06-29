@@ -1,4 +1,4 @@
-package com.xsx.util;
+/*package com.xsx.util;
 
 import java.lang.reflect.Method;
 
@@ -11,7 +11,7 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
-/**
+*//**
  * 
  * @Title: RedisCacheConfig.java
  * @Package com.xsx.util
@@ -19,7 +19,7 @@ import org.springframework.data.redis.core.RedisTemplate;
  * @author xsx
  * @date 2018年3月31日 下午2:52:29
  * @version V1.0
- */
+ *//*
 @Configuration
 @EnableCaching
 public class RedisCacheConfig extends CachingConfigurerSupport {
@@ -32,13 +32,13 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 		super();
 	}
 	
-	/**
+	*//**
      * 带参数的构造方法 初始化所有的成员变量
      * 
      * @param jedisConnectionFactory
      * @param redisTemplate
      * @param redisCacheManager
-     */
+     *//*
     public RedisCacheConfig(JedisConnectionFactory jedisConnectionFactory, RedisTemplate<String, String> redisTemplate,
             RedisCacheManager redisCacheManager) {
         this.jedisConnectionFactory = jedisConnectionFactory;
@@ -74,3 +74,4 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
         };
     }
 }
+*/

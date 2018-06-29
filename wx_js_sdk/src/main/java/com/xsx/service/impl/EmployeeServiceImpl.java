@@ -161,7 +161,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public Page<EmployeeOrderCount> statisticsEmployeeOrder(EmployeeOrderCount employeeOrderCount, Page<EmployeeOrderCount> page) {
 		if(employeeOrderCount != null && employeeOrderCount.getType() != null
-				&& employeeOrderCount.getType().equals("people")){
+				&& "people".equals(employeeOrderCount.getType())){
 			List<EmployeeOrderCount> list = employeeMapper.statisticsEmployeeOrderByPeople(employeeOrderCount,page);
 			for(EmployeeOrderCount emp : list){
 				emp.setTodayCount(ordersMapper.todayOrderCount(emp.getEmpId()));
@@ -183,8 +183,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 				emp.setTodayCount(ordersMapper.todayOrderCountByEmpIds(empIds));
 				emp.setTheMonthCount(ordersMapper.theMonthOrderCountByEmpIds(empIds));
 			}
-		 
-			
 		}
 		return page;
 	}
